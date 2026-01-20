@@ -1,0 +1,249 @@
+<!-- Styling -->
+
+:root {
+  /* Light mode colors */
+  --bg-light: #ffffff;
+  --text-light: #2c3e50;
+  --code-bg-light: #f6f8fa;
+  --code-text-light: #24292e;
+  --border-light: #e1e4e8;
+  --keyword-light: #d73a49;
+  --function-light: #6f42c1;
+  --string-light: #032f62;
+  --number-light: #005cc5;
+  --comment-light: #6a737d;
+  --header-light: #eaf5ff;
+  
+  /* Dark mode colors */
+  --bg-dark: #0d1117;
+  --text-dark: #c9d1d9;
+  --code-bg-dark: #161b22;
+  --code-text-dark: #a5d6ff;
+  --border-dark: #30363d;
+  --keyword-dark: #ff7b72;
+  --function-dark: #d2a8ff;
+  --string-dark: #a5d6ff;
+  --number-dark: #79c0ff;
+  --comment-dark: #8b949e;
+  --header-dark: #1c2637;
+}
+
+/* Base card styling */
+.card {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, "Helvetica Neue", sans-serif;
+  font-size: 18px;
+  line-height: 1.6;
+  padding: 20px;
+  background: var(--bg-light);
+  color: var(--text-light);
+  max-width: 800px;
+  margin: 0 auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.topic {
+    font-size: 14px;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+    text-align: left;
+}
+
+/* Question styling */
+.question-box {
+  font-size: 3rem;
+  font-weight: 500;
+  margin-bottom: 20px;
+  text-align: left;
+  color: #2a69ac;
+  padding: 5px 0;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+/* Explanation styling */
+.explanation-box {
+  font-size: 2rem;
+  margin: 15px 0;
+  text-align: left;
+  padding: 15px;
+  background: #f8f9fa;
+  border-left: 4px solid #4299e1;
+  border-radius: 4px;
+}
+
+/* Divider */
+.divider {
+  border: 0;
+  height: 1px;
+  background: var(--border-light);
+  margin: 20px 0;
+}
+
+/* Code sample container */
+.code-sample {
+  font-size: 1rem;
+  margin-top: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--code-bg-light);
+  border: 1px solid var(--border-light);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+/* Code header */
+.code-header {
+  background: var(--header-light);
+  padding: 10px 15px;
+  font-weight: bold;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  font-family: 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.9rem;
+}
+
+/* Code styling */
+.code-sample pre {
+  font-size: 2.5rem;
+  margin: 0;
+  border-left: 4px solid #ee5f1c;
+  padding: 15px;
+  overflow-x: auto;
+  font-family: 'SF Mono', Menlo, Monaco, Consolas, monospace;
+  line-height: 1.5;
+  color: var(--code-text-light);
+  tab-size: 4;
+}
+
+.pycode {
+  font-family: monospace;
+  white-space: pre;
+}
+
+/* SQL syntax highlighting */
+.language-sql .keyword { color: var(--keyword-light); font-weight: bold; }
+.language-sql .function { color: var(--function-light); }
+.language-sql .string { color: var(--string-light); }
+.language-sql .number { color: var(--number-light); }
+.language-sql .comment { color: var(--comment-light); font-style: italic; }
+
+/* Table styling for SQL results */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 15px 0;
+  font-size: 0.9rem;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid var(--border-light);
+}
+
+th {
+  background-color: #f1f5f9;
+  font-weight: bold;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  .card {
+    background: var(--bg-dark);
+    color: var(--text-dark);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  }
+  
+  .question-box {
+    color: #63b3ed;
+    border-bottom: 2px solid #2d3748;
+  }
+  
+  .explanation-box {
+    background: #1a202c;
+    border-left: 4px solid #4299e1;
+  }
+  
+  .code-sample {
+    background: var(--code-bg-dark);
+    border-color: var(--border-dark);
+  }
+  
+  .code-header {
+    background: var(--header-dark);
+    border-color: var(--border-dark);
+  }
+  
+  .code-sample pre {
+    color: var(--code-text-dark);
+  }
+  
+  /* Dark mode SQL syntax highlighting */
+  .language-sql .keyword { color: var(--keyword-dark); }
+  .language-sql .function { color: var(--function-dark); }
+  .language-sql .string { color: var(--string-dark); }
+  .language-sql .number { color: var(--number-dark); }
+  .language-sql .comment { color: var(--comment-dark); }
+  
+  th, td {
+    border-color: var(--border-dark);
+  }
+  
+  th {
+    background-color: #2d3748;
+  }
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .card {
+    padding: 15px;
+    font-size: 16px;
+  }
+  
+  .question-box {
+    font-size: 2rem;
+  }
+  
+  .explanation-box {
+    font-size: 1.5rem;
+    padding: 12px;
+  }
+  
+  .code-sample pre {
+    padding: 10px;
+    font-size: 1rem;
+  }
+  
+  .code-header {
+    padding: 8px 10px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Visual learner enhancements */
+.explanation-box strong {
+  color: #e53e3e;
+  font-weight: 600;
+}
+
+/* Improved readability for code */
+.code-sample pre {
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+/* Improved code block spacing */
+.code-sample code {
+  display: block;
+  padding: 0;
+}
+
+/* Focus styling for active elements */
+.card:focus-within {
+  box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.6);
+  outline: none;
+}

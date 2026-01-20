@@ -1,0 +1,112 @@
+<!-- CSS for Styling -->
+
+.card {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-size: 20px;
+    text-align: center;
+    color: #2c3e50;
+    background-color: #f8f9fa;
+    padding: 20px;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Topic header styling */
+.topic {
+    font-size: 14px;
+    color: #6c757d;
+    /* text-transform: uppercase; */
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    font-weight: 500;
+    text-align: center;
+}
+
+/* Question styling */
+.question {
+    margin: 20px 0;
+}
+
+.description {
+    font-size: 24px;
+    color: #2c3e50;
+    font-weight: 500;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Divider styling */
+.divider {
+    border: 0;
+    height: 1px;
+    background: #e9ecef;
+    margin: 25px 0;
+}
+
+/* Command styling */
+.command-wrapper {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.command {
+    font-family: 'JetBrains Mono', 'Fira Code', 'Menlo', monospace;
+    font-size: 36px;
+    color: #2563eb;
+    padding: 15px;
+    background-color: #f8fafc;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+    letter-spacing: 0.5px;
+    text-align: center;
+}
+
+/* Night mode support */
+.nightMode .card {
+    background-color: #1a1a1a;
+    color: #FFFFFF;
+}
+
+.nightMode .description,
+.nightMode .command-wrapper {
+    background-color: #2d2d2d;
+}
+
+.nightMode .description {
+    color: #e5e7eb;  /* Light grey color that's easy to read */
+}
+
+.nightMode .command {
+    background-color: #252525;
+    border-color: #404040;
+    color: #60a5fa;
+}
+
+.nightMode .example {
+    background-color: #333;
+    color: #cccccc;
+}
+
+.nightMode .topic {
+    color: #cccccc;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .card {
+        padding: 15px;
+    }
+    
+    .command {
+        font-size: 28px;
+    }
+    
+    .description {
+        font-size: 20px;
+    }
+}
