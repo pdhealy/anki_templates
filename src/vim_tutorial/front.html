@@ -1,44 +1,42 @@
 <!-- HTML for Front Template -->
-<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/open-dyslexic">
-
 <!-- Toggle controls -->
 <div class="toggle-group">
-    <button class="font-toggle" id="fontToggle" onclick="toggleFont()" title="Toggle dyslexia-friendly font">
+    <button class="font-toggle" id="fontToggle" title="Toggle dyslexia-friendly font">
         <span class="font-icon"></span>
     </button>
-    <button class="theme-toggle" id="themeToggle" onclick="toggleDarkMode()" title="Toggle dark/light mode">
+    <button class="theme-toggle" id="themeToggle" title="Toggle dark/light mode">
         <span class="theme-icon"></span>
     </button>
 </div>
 
 <script>
 (function () {
-    function applyTheme(dark) {
-        document.body.classList.toggle('dark-mode', dark);
-        var btn = document.getElementById('themeToggle');
-        if (btn) btn.classList.toggle('is-dark', dark);
-    }
-
     function applyFont(dyslexic) {
         document.body.classList.toggle('dyslexic', dyslexic);
         var btn = document.getElementById('fontToggle');
         if (btn) btn.classList.toggle('is-on', dyslexic);
     }
 
-    applyTheme(localStorage.getItem('vimCardDarkMode') === 'true');
-    applyFont(localStorage.getItem('vimCardDyslexic') === 'true');
+    function applyTheme(dark) {
+        document.body.classList.toggle('dark-mode', dark);
+        var btn = document.getElementById('themeToggle');
+        if (btn) btn.classList.toggle('is-dark', dark);
+    }
 
-    window.toggleDarkMode = function () {
-        var isDark = document.body.classList.contains('dark-mode');
-        localStorage.setItem('vimCardDarkMode', String(!isDark));
-        applyTheme(!isDark);
-    };
+    try { applyFont(localStorage.getItem('vimCardDyslexic') === 'true'); } catch(e) {}
+    try { applyTheme(localStorage.getItem('vimCardDarkMode') === 'true'); } catch(e) {}
 
-    window.toggleFont = function () {
+    document.getElementById('fontToggle').addEventListener('click', function () {
         var isOn = document.body.classList.contains('dyslexic');
-        localStorage.setItem('vimCardDyslexic', String(!isOn));
+        try { localStorage.setItem('vimCardDyslexic', String(!isOn)); } catch(e) {}
         applyFont(!isOn);
-    };
+    });
+
+    document.getElementById('themeToggle').addEventListener('click', function () {
+        var isDark = document.body.classList.contains('dark-mode');
+        try { localStorage.setItem('vimCardDarkMode', String(!isDark)); } catch(e) {}
+        applyTheme(!isDark);
+    });
 })();
 </script>
 
