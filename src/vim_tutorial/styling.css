@@ -1,13 +1,5 @@
 <!-- CSS for Styling -->
 
-/* ── OpenDyslexic font ── */
-@font-face {
-  font-family: 'OpenDyslexic';
-  src: url('https://cdn.jsdelivr.net/gh/antijingoist/opendyslexic@master/compiled/OpenDyslexic-Regular.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
-}
-
 /* ── Anemone / veqev color palette ── */
 :root {
   --bg:      #ebebeb;
@@ -174,7 +166,7 @@ body,
 /* ── Dyslexia-friendly font override ── */
 body.dyslexic .card,
 body.dyslexic .command {
-  font-family: 'OpenDyslexic', sans-serif;
+  font-family: 'Open Dyslexic', 'OpenDyslexic', sans-serif;
   letter-spacing: 0.05em;
   word-spacing: 0.1em;
   line-height: 1.9;
