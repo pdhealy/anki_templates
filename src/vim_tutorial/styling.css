@@ -134,7 +134,7 @@ body,
 /* ── Shared pill slider styles ── */
 .theme-toggle,
 .font-toggle {
-  position: static;
+  position: relative;
   width: 48px;
   height: 26px;
   background: #cbd5e1;
