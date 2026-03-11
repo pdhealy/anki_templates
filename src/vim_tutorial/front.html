@@ -16,7 +16,7 @@
     <div class="topic">VIM | Vi IMproved | Commands</div>
     <div class="toggle-group">
         <div class="toggle-item">
-            <span class="toggle-label">size</span>
+            <span class="toggle-label">size <span id="fontScaleDisplay"></span></span>
             <div class="size-control">
                 <button class="size-btn" id="sizeDecrease" title="Decrease font size">&#8722;</button>
                 <button class="size-btn" id="sizeIncrease" title="Increase font size">+</button>
@@ -45,6 +45,11 @@
 (function () {
     var fontScale = window.ankiVimFontScale || 1;
 
+    function updateScaleDisplay(s) {
+        var el = document.getElementById('fontScaleDisplay');
+        if (el) el.textContent = '(' + s.toFixed(1) + 'x)';
+    }
+
     function applyInlineStyles(s) {
         document.querySelectorAll('.description').forEach(function(el) {
             el.style.fontSize = 'calc(clamp(29px, 2vw + 21px, 42px) * ' + s + ')';
@@ -61,6 +66,7 @@
         fontScale = Math.min(2, Math.max(0.5, Math.round(scale * 10) / 10));
         window.ankiVimFontScale = fontScale;
         applyInlineStyles(fontScale);
+        updateScaleDisplay(fontScale);
         try { localStorage.setItem('vimCardFontScale', fontScale); } catch(e) {}
     }
 
@@ -76,8 +82,9 @@
         if (btn) btn.classList.toggle('is-dark', dark);
     }
 
-    // Sync inline styles with current scale (elements now exist)
+    // Sync inline styles and display with current scale (elements now exist)
     applyInlineStyles(fontScale);
+    updateScaleDisplay(fontScale);
 
     try { applyFont(localStorage.getItem('vimCardDyslexic') === 'true'); } catch(e) {}
     try { applyTheme(localStorage.getItem('vimCardDarkMode') === 'true'); } catch(e) {}
