@@ -165,8 +165,8 @@ body,
 
 /* ── Dyslexia-friendly font override ── */
 body.dyslexic .card,
-body.dyslexic .command {
-  font-family: 'Open Dyslexic', 'OpenDyslexic', sans-serif;
+body.dyslexic .card * {
+  font-family: 'Open Dyslexic', 'OpenDyslexic', sans-serif !important;
   letter-spacing: 0.05em;
   word-spacing: 0.1em;
   line-height: 1.9;
