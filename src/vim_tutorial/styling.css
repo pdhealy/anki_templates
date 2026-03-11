@@ -32,16 +32,21 @@ body,
   transition: color 0.3s ease, background-color 0.3s ease;
 }
 
+/* ── Card header (topic + toggles in one row) ── */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
 /* ── Topic header — styled like an anemone # heading ── */
 .topic {
   font-size: clamp(13px, 0.8vw + 10px, 16px);
   color: #e05a7b;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  margin-bottom: 1.5rem;
   font-weight: 600;
-  text-align: left;
-  padding-right: 120px;
   transition: color 0.3s ease;
 }
 
@@ -115,13 +120,10 @@ body,
 
 /* ── Toggle group container ── */
 .toggle-group {
-  position: fixed;
-  top: 12px;
-  right: 12px;
-  z-index: 9999;
   display: flex;
   gap: 24px;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .toggle-item {
@@ -155,7 +157,9 @@ body,
   color: #2b2e37;
   font-size: 16px;
   font-weight: 700;
-  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 0;
   cursor: pointer;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
@@ -181,7 +185,7 @@ body.dark-mode .size-btn:active {
 .theme-toggle,
 .font-toggle {
   position: relative;
-  width: 48px;
+  width: 58px;
   height: 26px;
   background: #cbd5e1;
   border: none;
@@ -217,7 +221,7 @@ body.dark-mode .size-btn:active {
 
 .theme-toggle.is-dark .theme-icon,
 .font-toggle.is-on .font-icon {
-  transform: translateX(22px);
+  transform: translateX(32px);
 }
 
 /* ── Futura font override ── */

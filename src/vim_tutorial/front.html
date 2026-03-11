@@ -1,25 +1,31 @@
 <!-- HTML for Front Template -->
-<!-- Toggle controls -->
-<div class="toggle-group">
-    <div class="toggle-item">
-        <span class="toggle-label">size</span>
-        <div class="size-control">
-            <button class="size-btn" id="sizeDecrease" title="Decrease font size">&#8722;</button>
-            <button class="size-btn" id="sizeIncrease" title="Increase font size">+</button>
+<div class="card-header">
+    <div class="topic">VIM | Vi IMproved | Commands</div>
+    <div class="toggle-group">
+        <div class="toggle-item">
+            <span class="toggle-label">size</span>
+            <div class="size-control">
+                <button class="size-btn" id="sizeDecrease" title="Decrease font size">&#8722;</button>
+                <button class="size-btn" id="sizeIncrease" title="Increase font size">+</button>
+            </div>
+        </div>
+        <div class="toggle-item">
+            <span class="toggle-label">Aa</span>
+            <button class="font-toggle" id="fontToggle" title="Toggle dyslexia-friendly font">
+                <span class="font-icon"></span>
+            </button>
+        </div>
+        <div class="toggle-item">
+            <span class="toggle-label">&#9790;</span>
+            <button class="theme-toggle" id="themeToggle" title="Toggle dark/light mode">
+                <span class="theme-icon"></span>
+            </button>
         </div>
     </div>
-    <div class="toggle-item">
-        <span class="toggle-label">Aa</span>
-        <button class="font-toggle" id="fontToggle" title="Toggle dyslexia-friendly font">
-            <span class="font-icon"></span>
-        </button>
-    </div>
-    <div class="toggle-item">
-        <span class="toggle-label">&#9790;</span>
-        <button class="theme-toggle" id="themeToggle" title="Toggle dark/light mode">
-            <span class="theme-icon"></span>
-        </button>
-    </div>
+</div>
+
+<div class="question">
+    <div class="description">{{Front}}</div>
 </div>
 
 <script>
@@ -78,9 +84,3 @@
     });
 })();
 </script>
-
-<div class="topic">VIM | Vi IMproved | Commands</div>
-
-<div class="question">
-    <div class="description">{{Front}}</div>
-</div>
