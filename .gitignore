@@ -68,3 +68,4 @@ temp/
 # Claude Code
 .claude/
 .mcp.json
+CLAUDE.md
