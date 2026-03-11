@@ -1,9 +1,14 @@
 <!-- HTML for Front Template -->
 
-<!-- Dark mode toggle button -->
-<button class="theme-toggle" id="themeToggle" onclick="toggleDarkMode()" title="Toggle dark/light mode">
-    <span class="theme-icon"></span>
-</button>
+<!-- Toggle controls -->
+<div class="toggle-group">
+    <button class="font-toggle" id="fontToggle" onclick="toggleFont()" title="Toggle dyslexia-friendly font">
+        <span class="font-icon"></span>
+    </button>
+    <button class="theme-toggle" id="themeToggle" onclick="toggleDarkMode()" title="Toggle dark/light mode">
+        <span class="theme-icon"></span>
+    </button>
+</div>
 
 <script>
 (function () {
@@ -13,12 +18,25 @@
         if (btn) btn.classList.toggle('is-dark', dark);
     }
 
+    function applyFont(dyslexic) {
+        document.body.classList.toggle('dyslexic', dyslexic);
+        var btn = document.getElementById('fontToggle');
+        if (btn) btn.classList.toggle('is-on', dyslexic);
+    }
+
     applyTheme(localStorage.getItem('vimCardDarkMode') === 'true');
+    applyFont(localStorage.getItem('vimCardDyslexic') === 'true');
 
     window.toggleDarkMode = function () {
         var isDark = document.body.classList.contains('dark-mode');
         localStorage.setItem('vimCardDarkMode', String(!isDark));
         applyTheme(!isDark);
+    };
+
+    window.toggleFont = function () {
+        var isOn = document.body.classList.contains('dyslexic');
+        localStorage.setItem('vimCardDyslexic', String(!isOn));
+        applyFont(!isOn);
     };
 })();
 </script>
