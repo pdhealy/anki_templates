@@ -1,192 +1,213 @@
-<!-- CSS for Styling -- > .card {
-  font-family:
-    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
-    Cantarell, sans-serif;
-  font-size: 20px;
-  text-align: center;
-  color: #2c3e50;
-  background-color: #f8f9fa;
-  padding: 20px;
-  line-height: 1.6;
+<!-- CSS for Styling -->
+
+/* ── Anemone / veqev color palette ── */
+:root {
+  --bg:      #ebebeb;
+  --text:    #2b2e37;
+  --accent:  #e05a7b;
+  --subtle:  #9a9ea8;
+  --surface: #d8d8d8;
+}
+
+/* Apply variables to the full viewport */
+body,
+#qa {
+  background-color: var(--bg);
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+/* ── Card base ── */
+.card {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Menlo', monospace;
+  font-size: 18px;
+  text-align: left;
+  color: var(--text);
+  background-color: var(--bg);
+  padding: 2rem 1.5rem;
+  line-height: 1.7;
   max-width: 800px;
   margin: 0 auto;
+  transition: color 0.3s ease, background-color 0.3s ease;
 }
 
-/* Topic header styling */
+/* ── Topic header — styled like an anemone # heading ── */
 .topic {
-  font-size: 14px;
-  color: #6c757d;
-  /* text-transform: uppercase; */
-  letter-spacing: 1px;
-  margin-bottom: 20px;
-  font-weight: 500;
-  text-align: center;
+  font-size: 13px;
+  color: var(--accent);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  text-align: left;
+  transition: color 0.3s ease;
 }
 
-/* Question styling */
+.topic::before {
+  content: '# ';
+}
+
+/* ── Question / Description ── */
 .question {
-  margin: 20px 0;
+  margin: 1.25rem 0;
 }
 
 .description {
-  font-size: 24px;
-  color: #2c3e50;
-  font-weight: 500;
-  padding: 15px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 22px;
+  color: var(--text);
+  font-weight: 400;
+  padding: 0.75rem 0 0.75rem 1rem;
+  border-left: 3px solid var(--accent);
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+  transition: color 0.3s ease, border-color 0.3s ease;
 }
 
-/* Divider styling */
+/* ── Divider ── */
 .divider {
   border: 0;
-  height: 1px;
-  background: #e9ecef;
-  margin: 25px 0;
+  border-top: 1px dashed var(--subtle);
+  margin: 1.5rem 0;
+  transition: border-color 0.3s ease;
 }
 
-/* Command styling */
+/* ── Command ── */
 .command-wrapper {
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1rem 0;
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .command {
-  font-family: "JetBrains Mono", "Fira Code", "Menlo", monospace;
-  font-size: 36px;
-  color: #2563eb;
-  padding: 15px;
-  background-color: #f8fafc;
-  border-radius: 6px;
-  border: 1px solid #e2e8f0;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Menlo', monospace;
+  font-size: 34px;
+  color: var(--accent);
+  padding: 0;
+  background: none;
+  border: none;
   letter-spacing: 0.5px;
-  text-align: center;
+  text-align: left;
+  transition: color 0.3s ease;
 }
 
-/* ── Dark/light mode toggle button ── */
+.command::before {
+  content: '> ';
+  opacity: 0.45;
+}
+
+/* ── Example ── */
+.example {
+  font-size: 14px;
+  color: var(--subtle);
+  margin-top: 0.75rem;
+  padding-left: 1.5rem;
+  font-style: italic;
+  transition: color 0.3s ease;
+}
+
+/* ── Theme toggle — minimal icon button, anemone style ── */
 .theme-toggle {
   position: fixed;
   top: 12px;
-  right: 12px;
+  right: 14px;
   z-index: 9999;
-  width: 48px;
-  height: 26px;
-  background: #cbd5e1;
+  background: none;
   border: none;
-  border-radius: 999px;
   cursor: pointer;
-  padding: 0;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-  transition: background 0.25s;
+  font-size: 1.25rem;
+  color: var(--text);
+  padding: 4px;
+  line-height: 1;
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  box-shadow: none;
+  transition: color 0.3s ease, transform 0.1s ease;
 }
 
-/* The sliding knob */
+.theme-toggle:hover {
+  color: var(--accent);
+}
+
+.theme-toggle:active {
+  transform: scale(0.9);
+}
+
+/* Moon icon in light mode, sun icon in dark mode */
 .theme-toggle .theme-icon {
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  width: 20px;
-  height: 20px;
-  background: #fff;
-  border-radius: 50%;
-  transition: transform 0.25s;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  position: static;
+  width: auto;
+  height: auto;
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+  transform: none;
+  transition: none;
+  font-style: normal;
 }
 
-/* Knob slid to the right when dark */
-.theme-toggle.is-dark {
-  background: #3b82f6;
+.theme-toggle .theme-icon::before {
+  content: '☽';
 }
 
-.theme-toggle.is-dark .theme-icon {
-  transform: translateX(22px);
+.theme-toggle.is-dark .theme-icon::before {
+  content: '☀';
 }
 
 /* ── Anki built-in night mode ── */
 .nightMode .card {
-  background-color: #1a1a1a;
-  color: #ffffff;
-}
-
-.nightMode .description,
-.nightMode .command-wrapper {
-  background-color: #2d2d2d;
+  background-color: #1e2028;
+  color: #b6beca;
 }
 
 .nightMode .description {
-  color: #e5e7eb;
+  border-color: #5ccfe6;
+  color: #b6beca;
 }
 
 .nightMode .command {
-  background-color: #252525;
-  border-color: #404040;
-  color: #60a5fa;
-}
-
-.nightMode .example {
-  background-color: #333;
-  color: #cccccc;
+  color: #5ccfe6;
 }
 
 .nightMode .topic {
-  color: #cccccc;
+  color: #5ccfe6;
+}
+
+.nightMode .example {
+  color: #6b7280;
+}
+
+.nightMode .divider {
+  border-color: #3a3e4a;
 }
 
 /* ── Custom dark mode (toggle button) ── */
+body.dark-mode {
+  --bg:      #1e2028;
+  --text:    #b6beca;
+  --accent:  #5ccfe6;
+  --subtle:  #6b7280;
+  --surface: #252830;
+}
+
 body.dark-mode,
 body.dark-mode #qa,
 body.dark-mode #qa .card {
-  background-color: #1a1a1a;
-}
-
-body.dark-mode .card {
-  background-color: #1a1a1a;
-  color: #ffffff;
-}
-
-body.dark-mode .description,
-body.dark-mode .command-wrapper {
-  background-color: #2d2d2d;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-}
-
-body.dark-mode .description {
-  color: #e5e7eb;
-}
-
-body.dark-mode .command {
-  background-color: #252525;
-  border-color: #404040;
-  color: #60a5fa;
-}
-
-body.dark-mode .example {
-  background-color: #333;
-  color: #cccccc;
-}
-
-body.dark-mode .topic {
-  color: #aaaaaa;
-}
-
-body.dark-mode .divider {
-  background: #374151;
+  background-color: #1e2028;
 }
 
 /* ── Mobile responsiveness ── */
 @media (max-width: 768px) {
   .card {
-    padding: 15px;
+    padding: 1.5rem 1rem;
   }
 
   .command {
-    font-size: 28px;
+    font-size: 26px;
   }
 
   .description {
-    font-size: 20px;
+    font-size: 18px;
   }
 }
