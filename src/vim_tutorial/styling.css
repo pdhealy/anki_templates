@@ -1,112 +1,288 @@
 <!-- CSS for Styling -->
 
+/* ── Anemone / veqev color palette ── */
+:root {
+  --bg:      #ebebeb;
+  --text:    #2b2e37;
+  --accent:  #e05a7b;
+  --subtle:  #9a9ea8;
+  --surface: #d8d8d8;
+}
+
+/* Apply variables to the full viewport */
+body,
+#qa {
+  background-color: var(--bg);
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+/* ── Card base ── */
 .card {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    font-size: 20px;
-    text-align: center;
-    color: #2c3e50;
-    background-color: #f8f9fa;
-    padding: 20px;
-    line-height: 1.6;
-    max-width: 800px;
-    margin: 0 auto;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Menlo', monospace;
+  font-size: clamp(20px, 1.2vw + 15px, 26px);
+  text-align: left;
+  color: var(--text);
+  background-color: var(--bg);
+  padding: 2rem 1.5rem;
+  line-height: 1.7;
+  max-width: 800px;
+  margin: 0 auto;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  transition: color 0.3s ease, background-color 0.3s ease;
 }
 
-/* Topic header styling */
+/* ── Topic header — styled like an anemone # heading ── */
 .topic {
-    font-size: 14px;
-    color: #6c757d;
-    /* text-transform: uppercase; */
-    letter-spacing: 1px;
-    margin-bottom: 20px;
-    font-weight: 500;
-    text-align: center;
+  font-size: clamp(13px, 0.8vw + 10px, 16px);
+  color: #e05a7b;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  text-align: left;
+  padding-right: 120px;
+  transition: color 0.3s ease;
 }
 
-/* Question styling */
+.topic::before {
+  content: '# ';
+}
+
+/* ── Question / Description ── */
 .question {
-    margin: 20px 0;
+  margin: 1.25rem 0;
 }
 
 .description {
-    font-size: 24px;
-    color: #2c3e50;
-    font-weight: 500;
-    padding: 15px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  font-size: calc(clamp(29px, 2vw + 21px, 42px) * var(--font-scale, 1));
+  color: var(--text);
+  font-weight: 400;
+  padding: 0.75rem 0 0.75rem 1rem;
+  border-left: 3px solid #e05a7b;
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  transition: color 0.3s ease, border-color 0.3s ease;
 }
 
-/* Divider styling */
+/* ── Divider ── */
 .divider {
-    border: 0;
-    height: 1px;
-    background: #e9ecef;
-    margin: 25px 0;
+  border: 0;
+  border-top: 1px dashed var(--subtle);
+  margin: 1.5rem 0;
+  transition: border-color 0.3s ease;
 }
 
-/* Command styling */
+/* ── Command ── */
 .command-wrapper {
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 1rem 0;
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .command {
-    font-family: 'JetBrains Mono', 'Fira Code', 'Menlo', monospace;
-    font-size: 36px;
-    color: #2563eb;
-    padding: 15px;
-    background-color: #f8fafc;
-    border-radius: 6px;
-    border: 1px solid #e2e8f0;
-    letter-spacing: 0.5px;
-    text-align: center;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Menlo', monospace;
+  font-size: calc(clamp(39px, 3.9vw + 23px, 68px) * var(--font-scale, 1));
+  color: #e05a7b;
+  padding: 0;
+  background: none;
+  border: none;
+  letter-spacing: 0.5px;
+  text-align: left;
+  overflow-wrap: break-word;
+  word-break: break-all;
+  transition: color 0.3s ease;
 }
 
-/* Night mode support */
+.command::before {
+  content: '> ';
+  opacity: 0.45;
+}
+
+/* ── Example ── */
+.example {
+  font-size: calc(clamp(18px, 1vw + 14px, 23px) * var(--font-scale, 1));
+  color: var(--subtle);
+  margin-top: 0.75rem;
+  padding-left: 1.5rem;
+  font-style: italic;
+  transition: color 0.3s ease;
+}
+
+/* ── Toggle group container ── */
+.toggle-group {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 9999;
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.toggle-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.toggle-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--subtle);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+/* ── Font size +/- buttons ── */
+.size-control {
+  display: flex;
+  gap: 4px;
+}
+
+.size-btn {
+  width: 78px;
+  height: 26px;
+  border: none;
+  border-radius: 6px;
+  background: #cbd5e1;
+  color: #2b2e37;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  transition: background 0.2s, color 0.2s;
+}
+
+.size-btn:active {
+  background: #e05a7b;
+  color: #fff;
+}
+
+body.dark-mode .size-btn {
+  background: #3a3e4a;
+  color: #b6beca;
+}
+
+body.dark-mode .size-btn:active {
+  background: #5ccfe6;
+  color: #1e2028;
+}
+
+/* ── Shared pill slider styles ── */
+.theme-toggle,
+.font-toggle {
+  position: relative;
+  width: 48px;
+  height: 26px;
+  background: #cbd5e1;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  padding: 0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  transition: background 0.25s;
+}
+
+/* The sliding knob */
+.theme-toggle .theme-icon,
+.font-toggle .font-icon {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.25s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+/* Active states */
+.font-toggle.is-on {
+  background: var(--accent);
+}
+
+.theme-toggle.is-dark {
+  background: #6366f1;
+}
+
+.theme-toggle.is-dark .theme-icon,
+.font-toggle.is-on .font-icon {
+  transform: translateX(22px);
+}
+
+/* ── Futura font override ── */
+body.dyslexic,
+body.dyslexic * {
+  font-family: 'Futura', 'Futura-Medium', 'Century Gothic', sans-serif !important;
+  letter-spacing: 0.05em;
+  word-spacing: 0.1em;
+  line-height: 1.9;
+}
+
+/* ── Anki built-in night mode ── */
 .nightMode .card {
-    background-color: #1a1a1a;
-    color: #FFFFFF;
-}
-
-.nightMode .description,
-.nightMode .command-wrapper {
-    background-color: #2d2d2d;
+  background-color: #1e2028;
+  color: #b6beca;
 }
 
 .nightMode .description {
-    color: #e5e7eb;  /* Light grey color that's easy to read */
+  border-color: #5ccfe6;
+  color: #b6beca;
 }
 
 .nightMode .command {
-    background-color: #252525;
-    border-color: #404040;
-    color: #60a5fa;
-}
-
-.nightMode .example {
-    background-color: #333;
-    color: #cccccc;
+  color: #5ccfe6;
 }
 
 .nightMode .topic {
-    color: #cccccc;
+  color: #5ccfe6;
 }
 
-/* Mobile responsiveness */
+.nightMode .example {
+  color: #6b7280;
+}
+
+.nightMode .divider {
+  border-color: #3a3e4a;
+}
+
+/* ── Custom dark mode (toggle button) ── */
+body.dark-mode {
+  --bg:      #1e2028;
+  --text:    #b6beca;
+  --accent:  #5ccfe6;
+  --subtle:  #6b7280;
+  --surface: #252830;
+}
+
+body.dark-mode,
+body.dark-mode #qa,
+body.dark-mode #qa .card {
+  background-color: #1e2028;
+}
+
+body.dark-mode .topic,
+body.dark-mode .command {
+  color: #5ccfe6;
+}
+
+body.dark-mode .description {
+  border-left-color: #5ccfe6;
+}
+
+/* ── Mobile responsiveness ── */
 @media (max-width: 768px) {
-    .card {
-        padding: 15px;
-    }
-    
-    .command {
-        font-size: 28px;
-    }
-    
-    .description {
-        font-size: 20px;
-    }
+  .card {
+    padding: 1.5rem 1rem;
+  }
 }

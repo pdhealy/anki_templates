@@ -1,4 +1,84 @@
 <!-- HTML for Front Template -->
+<!-- Toggle controls -->
+<div class="toggle-group">
+    <div class="toggle-item">
+        <span class="toggle-label">size</span>
+        <div class="size-control">
+            <button class="size-btn" id="sizeDecrease" title="Decrease font size">&#8722;</button>
+            <button class="size-btn" id="sizeIncrease" title="Increase font size">+</button>
+        </div>
+    </div>
+    <div class="toggle-item">
+        <span class="toggle-label">Aa</span>
+        <button class="font-toggle" id="fontToggle" title="Toggle dyslexia-friendly font">
+            <span class="font-icon"></span>
+        </button>
+    </div>
+    <div class="toggle-item">
+        <span class="toggle-label">&#9790;</span>
+        <button class="theme-toggle" id="themeToggle" title="Toggle dark/light mode">
+            <span class="theme-icon"></span>
+        </button>
+    </div>
+</div>
+
+<script>
+(function () {
+    var fontScale = 1;
+
+    function applyFontScale(scale) {
+        fontScale = Math.min(2, Math.max(0.5, Math.round(scale * 10) / 10));
+        var s = fontScale;
+        document.querySelectorAll('.description').forEach(function(el) {
+            el.style.fontSize = 'calc(clamp(29px, 2vw + 21px, 42px) * ' + s + ')';
+        });
+        document.querySelectorAll('.command').forEach(function(el) {
+            el.style.fontSize = 'calc(clamp(39px, 3.9vw + 23px, 68px) * ' + s + ')';
+        });
+        document.querySelectorAll('.example').forEach(function(el) {
+            el.style.fontSize = 'calc(clamp(18px, 1vw + 14px, 23px) * ' + s + ')';
+        });
+        try { localStorage.setItem('vimCardFontScale', fontScale); } catch(e) {}
+    }
+
+    function applyFont(dyslexic) {
+        document.body.classList.toggle('dyslexic', dyslexic);
+        var btn = document.getElementById('fontToggle');
+        if (btn) btn.classList.toggle('is-on', dyslexic);
+    }
+
+    function applyTheme(dark) {
+        document.body.classList.toggle('dark-mode', dark);
+        var btn = document.getElementById('themeToggle');
+        if (btn) btn.classList.toggle('is-dark', dark);
+    }
+
+    try { applyFontScale(parseFloat(localStorage.getItem('vimCardFontScale')) || 1); } catch(e) {}
+    try { applyFont(localStorage.getItem('vimCardDyslexic') === 'true'); } catch(e) {}
+    try { applyTheme(localStorage.getItem('vimCardDarkMode') === 'true'); } catch(e) {}
+
+    document.getElementById('sizeIncrease').addEventListener('click', function () {
+        applyFontScale(fontScale + 0.1);
+    });
+
+    document.getElementById('sizeDecrease').addEventListener('click', function () {
+        applyFontScale(fontScale - 0.1);
+    });
+
+    document.getElementById('fontToggle').addEventListener('click', function () {
+        var isOn = document.body.classList.contains('dyslexic');
+        try { localStorage.setItem('vimCardDyslexic', String(!isOn)); } catch(e) {}
+        applyFont(!isOn);
+    });
+
+    document.getElementById('themeToggle').addEventListener('click', function () {
+        var isDark = document.body.classList.contains('dark-mode');
+        try { localStorage.setItem('vimCardDarkMode', String(!isDark)); } catch(e) {}
+        applyTheme(!isDark);
+    });
+})();
+</script>
+
 <div class="topic">VIM | Vi IMproved | Commands</div>
 
 <div class="question">
