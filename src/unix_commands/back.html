@@ -7,10 +7,29 @@
   <div class="command">{{Back}}</div>
   {{#Back}}
   <div class="example">
-    <div class="example-label">Example Usage</div>
-    <code class="example-command">{{Example Usage}}</code>
-    <div class="example-label">Example Output</div>
-    <code class="example-output">{{Example Output}}</code>
+    <div class="example-section">
+      <div class="example-label">Example Usage</div>
+      <div class="example-content">
+        <code class="example-command">{{Example Usage}}</code>
+      </div>
+    </div>
+    <div class="example-section">
+      <div class="example-label">Example Output</div>
+      <div class="example-content">
+        <code class="example-output">{{Example Output}}</code>
+      </div>
+    </div>
   </div>
   {{/Back}}
 </div>
+
+<script>
+document.querySelectorAll('.example-label').forEach(function(label) {
+    var content = label.nextElementSibling;
+    label.addEventListener('click', function() {
+        var isOpen = content.classList.contains('is-open');
+        content.classList.toggle('is-open', !isOpen);
+        label.classList.toggle('is-open', !isOpen);
+    });
+});
+</script>
