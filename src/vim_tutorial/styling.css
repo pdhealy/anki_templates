@@ -234,6 +234,15 @@ body.dark-mode #qa .card {
   background-color: #1e2028;
 }
 
+body.dark-mode .topic,
+body.dark-mode .command {
+  color: #5ccfe6;
+}
+
+body.dark-mode .description {
+  border-left-color: #5ccfe6;
+}
+
 /* ── Mobile responsiveness ── */
 @media (max-width: 768px) {
   .card {
