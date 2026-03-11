@@ -35,7 +35,7 @@ body,
 /* ── Topic header — styled like an anemone # heading ── */
 .topic {
   font-size: clamp(13px, 0.8vw + 10px, 16px);
-  color: var(--accent);
+  color: #e05a7b;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   margin-bottom: 1.5rem;
@@ -59,7 +59,7 @@ body,
   color: var(--text);
   font-weight: 400;
   padding: 0.75rem 0 0.75rem 1rem;
-  border-left: 3px solid var(--accent);
+  border-left: 3px solid #e05a7b;
   background: none;
   border-radius: 0;
   box-shadow: none;
@@ -87,7 +87,7 @@ body,
 .command {
   font-family: 'JetBrains Mono', 'Fira Code', 'Menlo', monospace;
   font-size: clamp(39px, 3.9vw + 23px, 68px);
-  color: var(--accent);
+  color: #e05a7b;
   padding: 0;
   background: none;
   border: none;
