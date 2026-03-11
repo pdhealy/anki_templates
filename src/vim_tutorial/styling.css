@@ -120,8 +120,24 @@ body,
   right: 12px;
   z-index: 9999;
   display: flex;
-  gap: 8px;
+  gap: 12px;
   align-items: center;
+}
+
+.toggle-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.toggle-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--subtle);
+  line-height: 1;
+  text-transform: uppercase;
 }
 
 /* ── Shared pill slider styles ── */
@@ -154,9 +170,12 @@ body,
 }
 
 /* Active states */
-.theme-toggle.is-dark,
 .font-toggle.is-on {
   background: var(--accent);
+}
+
+.theme-toggle.is-dark {
+  background: #6366f1;
 }
 
 .theme-toggle.is-dark .theme-icon,
