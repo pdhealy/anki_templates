@@ -174,7 +174,7 @@ body,
 /* ── Dyslexia-friendly font override ── */
 body.dyslexic,
 body.dyslexic * {
-  font-family: 'OpenDyslexic', sans-serif !important;
+  font-family: 'OpenDyslexic', 'OpenDyslexic-Regular', sans-serif !important;
   letter-spacing: 0.05em;
   word-spacing: 0.1em;
   line-height: 1.9;
