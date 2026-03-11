@@ -55,7 +55,7 @@ body,
 }
 
 .description {
-  font-size: clamp(29px, 2vw + 21px, 42px);
+  font-size: calc(clamp(29px, 2vw + 21px, 42px) * var(--font-scale, 1));
   color: var(--text);
   font-weight: 400;
   padding: 0.75rem 0 0.75rem 1rem;
@@ -86,7 +86,7 @@ body,
 
 .command {
   font-family: 'JetBrains Mono', 'Fira Code', 'Menlo', monospace;
-  font-size: clamp(39px, 3.9vw + 23px, 68px);
+  font-size: calc(clamp(39px, 3.9vw + 23px, 68px) * var(--font-scale, 1));
   color: #e05a7b;
   padding: 0;
   background: none;
@@ -105,7 +105,7 @@ body,
 
 /* ── Example ── */
 .example {
-  font-size: clamp(18px, 1vw + 14px, 23px);
+  font-size: calc(clamp(18px, 1vw + 14px, 23px) * var(--font-scale, 1));
   color: var(--subtle);
   margin-top: 0.75rem;
   padding-left: 1.5rem;
@@ -138,6 +138,43 @@ body,
   color: var(--subtle);
   line-height: 1;
   text-transform: uppercase;
+}
+
+/* ── Font size +/- buttons ── */
+.size-control {
+  display: flex;
+  gap: 4px;
+}
+
+.size-btn {
+  width: 26px;
+  height: 26px;
+  border: none;
+  border-radius: 6px;
+  background: #cbd5e1;
+  color: #2b2e37;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  transition: background 0.2s, color 0.2s;
+}
+
+.size-btn:active {
+  background: #e05a7b;
+  color: #fff;
+}
+
+body.dark-mode .size-btn {
+  background: #3a3e4a;
+  color: #b6beca;
+}
+
+body.dark-mode .size-btn:active {
+  background: #5ccfe6;
+  color: #1e2028;
 }
 
 /* ── Shared pill slider styles ── */
