@@ -57,15 +57,10 @@
         document.querySelectorAll('.command').forEach(function(el) {
             el.style.fontSize = 'calc(clamp(39px, 3.9vw + 23px, 68px) * ' + s + ')';
         });
-        document.querySelectorAll('.example-label').forEach(function(el) {
-            el.style.fontSize = 'calc(clamp(39px, 3.9vw + 23px, 68px) * ' + s + ' * 0.6)';
-        });
         document.querySelectorAll('.example-command').forEach(function(el) {
-            el.style.fontSize = 'calc(clamp(39px, 3.9vw + 23px, 68px) * ' + s + ' * 0.6)';
+            el.style.fontSize = 'calc(clamp(39px, 3.9vw + 23px, 68px) * ' + s + ' * 0.75)';
         });
-        document.querySelectorAll('.example-output').forEach(function(el) {
-            el.style.fontSize = 'calc(clamp(39px, 3.9vw + 23px, 68px) * ' + s + ' * 0.6)';
-        });
+        // example-label and example-output use fixed sizes — not scaled by font buttons
     }
 
     function applyFontScale(scale) {
