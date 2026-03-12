@@ -60,6 +60,9 @@
         document.querySelectorAll('.example-command').forEach(function(el) {
             el.style.fontSize = 'calc(clamp(39px, 3.9vw + 23px, 68px) * ' + s + ' * 0.75)';
         });
+        document.querySelectorAll('.desc-body').forEach(function(el) {
+            el.style.fontSize = 'calc(clamp(16px, 1vw + 13px, 22px) * ' + s + ')';
+        });
         // example-label and example-output use fixed sizes — not scaled by font buttons
     }
 
@@ -113,6 +116,8 @@
         result = result.replace(/<br>(<ul)/g, '$1').replace(/(<\/ul>)<br>/g, '$1');
         el.innerHTML = result;
     }
+
+    window.ankiRenderMarkdown = renderMarkdown;
 
     document.querySelectorAll('.description').forEach(renderMarkdown);
 

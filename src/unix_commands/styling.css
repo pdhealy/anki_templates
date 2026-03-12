@@ -226,6 +226,44 @@ body.dark-mode .description .md-code,
   margin-top: 0.4rem;
 }
 
+/* ── Description section body (Markdown-rendered) ── */
+.desc-body {
+  font-size: calc(clamp(16px, 1vw + 13px, 22px) * var(--font-scale, 1));
+  color: var(--text);
+  line-height: 1.75;
+  padding: 0.5rem 0 0.5rem 1rem;
+  border-left: 3px solid var(--subtle);
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.desc-body .md-list {
+  margin: 0.4em 0;
+  padding-left: 1.4em;
+  list-style: disc;
+}
+
+.desc-body .md-list li {
+  margin: 0.25em 0;
+}
+
+.desc-body .md-code {
+  background: rgba(0, 0, 0, 0.08);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  font-size: 0.85em;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Menlo', monospace;
+}
+
+body.dark-mode .desc-body,
+.nightMode .desc-body {
+  border-left-color: var(--subtle);
+}
+
+body.dark-mode .desc-body .md-code,
+.nightMode .desc-body .md-code {
+  background: rgba(255, 255, 255, 0.1);
+}
+
 /* ── Toggle group container ── */
 .toggle-group {
   display: flex;
@@ -413,6 +451,10 @@ body.dark-mode .example-command {
 }
 
 /* .example-output is always terminal-dark — no dark-mode override needed */
+
+body.dark-mode .desc-body {
+  color: var(--text);
+}
 
 /* ── Mobile responsiveness ── */
 @media (max-width: 768px) {

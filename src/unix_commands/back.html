@@ -19,6 +19,12 @@
         <code class="example-output">{{Example Output}}</code>
       </div>
     </div>
+    <div class="example-section">
+      <div class="example-label">Description</div>
+      <div class="example-content">
+        <div class="desc-body">{{Description}}</div>
+      </div>
+    </div>
   </div>
   {{/Back}}
 </div>
@@ -55,4 +61,8 @@ document.querySelectorAll('.example-label').forEach(function(label) {
         toggle();
     });
 });
+
+if (window.ankiRenderMarkdown) {
+    document.querySelectorAll('.desc-body').forEach(window.ankiRenderMarkdown);
+}
 </script>
