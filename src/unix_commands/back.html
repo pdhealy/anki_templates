@@ -26,6 +26,13 @@
 <script>
 document.querySelectorAll('.example-label').forEach(function(label) {
     var content = label.nextElementSibling;
+    var isEmpty = !content || content.textContent.trim() === '';
+
+    if (isEmpty) {
+        label.classList.add('is-empty');
+        return;
+    }
+
     var tapped = false;
 
     function toggle() {

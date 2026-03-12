@@ -137,16 +137,31 @@ body,
   transition: color 0.2s ease;
 }
 
-.example-label::before {
+.example-label::after {
   content: '›';
   display: inline-block;
   font-size: 1.2em;
   line-height: 1;
+  margin-left: auto;
+  padding-left: 0.5em;
   transition: transform 0.25s ease;
 }
 
-.example-label.is-open::before {
+.example-label.is-open::after {
   transform: rotate(90deg);
+}
+
+.example-label.is-empty {
+  cursor: default;
+  opacity: 0.35;
+  touch-action: none;
+}
+
+.example-label.is-empty::after {
+  content: '—';
+  font-size: 1em;
+  opacity: 0.6;
+  transition: none;
 }
 
 .example-content {
