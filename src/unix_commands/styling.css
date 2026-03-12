@@ -115,7 +115,7 @@ body.dark-mode .description .md-code,
 
 .command {
   font-family: 'JetBrains Mono', 'Fira Code', 'Menlo', monospace;
-  font-size: calc(clamp(39px, 3.9vw + 23px, 68px) * var(--font-scale, 1));
+  font-size: calc(clamp(29px, 2vw + 21px, 42px) * var(--font-scale, 1));
   color: #e05a7b;
   padding: 0;
   background: none;
@@ -201,7 +201,7 @@ body.dark-mode .description .md-code,
 .example-command {
   display: block;
   font-family: 'JetBrains Mono', 'Fira Code', 'Menlo', monospace;
-  font-size: calc(clamp(39px, 3.9vw + 23px, 68px) * var(--font-scale, 1) * 0.75);
+  font-size: calc(clamp(29px, 2vw + 21px, 42px) * var(--font-scale, 1) * 0.75);
   color: #22c55e;
   padding: 0.5rem 0 0.5rem 1rem;
   border-left: 3px solid #22c55e;
