@@ -51,7 +51,7 @@
     }
 
     function applyInlineStyles(s) {
-        document.querySelectorAll('.description').forEach(function(el) {
+        document.querySelectorAll('.description, .description li').forEach(function(el) {
             el.style.fontSize = 'calc(clamp(29px, 2vw + 21px, 42px) * ' + s + ')';
         });
         document.querySelectorAll('.command').forEach(function(el) {
