@@ -57,11 +57,14 @@
         document.querySelectorAll('.command').forEach(function(el) {
             el.style.fontSize = 'calc(clamp(39px, 3.9vw + 23px, 68px) * ' + s + ')';
         });
+        document.querySelectorAll('.example-label').forEach(function(el) {
+            el.style.fontSize = 'calc(clamp(39px, 3.9vw + 23px, 68px) * ' + s + ' * 0.6)';
+        });
         document.querySelectorAll('.example-command').forEach(function(el) {
-            el.style.fontSize = 'calc(clamp(20px, 1.5vw + 14px, 30px) * ' + s + ')';
+            el.style.fontSize = 'calc(clamp(39px, 3.9vw + 23px, 68px) * ' + s + ' * 0.6)';
         });
         document.querySelectorAll('.example-output').forEach(function(el) {
-            el.style.fontSize = 'calc(clamp(14px, 0.8vw + 10px, 18px) * ' + s + ')';
+            el.style.fontSize = 'calc(clamp(39px, 3.9vw + 23px, 68px) * ' + s + ' * 0.6)';
         });
     }
 

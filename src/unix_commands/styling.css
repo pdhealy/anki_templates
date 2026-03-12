@@ -120,7 +120,7 @@ body,
 }
 
 .example-label {
-  font-size: clamp(11px, 0.6vw + 9px, 14px);
+  font-size: calc(clamp(39px, 3.9vw + 23px, 68px) * var(--font-scale, 1) * 0.9);
   color: var(--subtle);
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -131,6 +131,9 @@ body,
   align-items: center;
   gap: 0.4em;
   user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  padding: 0.6em 0;
   transition: color 0.2s ease;
 }
 
@@ -149,7 +152,7 @@ body,
 .example-content {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.35s ease;
+  transition: max-height 0.2s ease;
 }
 
 .example-content.is-open {
@@ -159,7 +162,7 @@ body,
 .example-command {
   display: block;
   font-family: 'JetBrains Mono', 'Fira Code', 'Menlo', monospace;
-  font-size: calc(clamp(20px, 1.5vw + 14px, 30px) * var(--font-scale, 1));
+  font-size: calc(clamp(39px, 3.9vw + 23px, 68px) * var(--font-scale, 1) * 0.9);
   color: #22c55e;
   padding: 0.5rem 0 0.5rem 1rem;
   border-left: 3px solid #22c55e;
@@ -172,7 +175,7 @@ body,
 .example-output {
   display: block;
   font-family: 'JetBrains Mono', 'Fira Code', 'Menlo', monospace;
-  font-size: calc(clamp(14px, 0.8vw + 10px, 18px) * var(--font-scale, 1));
+  font-size: calc(clamp(39px, 3.9vw + 23px, 68px) * var(--font-scale, 1) * 0.9);
   color: var(--subtle);
   padding: 0.5rem 0 0.5rem 1rem;
   border-left: 3px solid var(--subtle);

@@ -26,10 +26,23 @@
 <script>
 document.querySelectorAll('.example-label').forEach(function(label) {
     var content = label.nextElementSibling;
-    label.addEventListener('click', function() {
+    var tapped = false;
+
+    function toggle() {
         var isOpen = content.classList.contains('is-open');
         content.classList.toggle('is-open', !isOpen);
         label.classList.toggle('is-open', !isOpen);
+    }
+
+    label.addEventListener('touchstart', function(e) {
+        tapped = true;
+        toggle();
+        e.preventDefault();
+    }, { passive: false });
+
+    label.addEventListener('click', function() {
+        if (tapped) { tapped = false; return; }
+        toggle();
     });
 });
 </script>
