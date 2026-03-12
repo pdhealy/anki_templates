@@ -26,7 +26,10 @@
 <script>
 document.querySelectorAll('.example-label').forEach(function(label) {
     var content = label.nextElementSibling;
-    var isEmpty = !content || content.textContent.trim() === '';
+    var codeEl = content ? content.querySelector('code') : null;
+    var rawText = codeEl ? codeEl.textContent : (content ? content.textContent : '');
+    // Strip all whitespace, non-breaking spaces, zero-width spaces
+    var isEmpty = rawText.replace(/[\s\u00a0\u200b\ufeff]/g, '') === '';
 
     if (isEmpty) {
         label.classList.add('is-empty');
