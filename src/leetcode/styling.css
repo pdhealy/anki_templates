@@ -217,7 +217,7 @@ body,
 
 /* ── Code block ── */
 .code-block {
-  background: rgba(0, 0, 0, 0.03);
+  background: #f8fafc;
   border-radius: 6px;
   overflow-x: auto;
   margin: 0.4rem 0 0.75rem;
@@ -240,29 +240,35 @@ body,
   display: table-cell;
   color: var(--subtle);
   text-align: right;
-  padding: 0.05em 0.75em 0.05em 0.5em;
+  padding: 0.15em 0.75em 0.15em 0.5em;
   user-select: none;
   white-space: nowrap;
   width: 1%;
   vertical-align: top;
+  background: rgba(0, 0, 0, 0.025);
   border-right: 1px solid var(--surface);
 }
 
 .line-code {
   display: table-cell;
-  padding: 0.05em 1em;
+  padding: 0.15em 1em;
   white-space: pre;
   color: var(--text);
   vertical-align: top;
 }
 
+/* ── Indent guides ── */
+.ig {
+  border-left: 1px solid rgba(0, 0, 0, 0.18);
+}
+
 /* ── Python syntax highlighting ── */
-.py-kw  { color: #0891b2; }
-.py-bi  { color: #2563eb; }
+.py-kw  { color: #9333ea; }
+.py-bi  { color: #16a34a; }
 .py-str { color: #d97706; }
-.py-cm  { color: #6b7280; font-style: italic; }
+.py-cm  { color: #16a34a; }
 .py-num { color: #059669; }
-.py-dec { color: #7c3aed; }
+.py-dec { color: #9333ea; }
 
 /* ── Anki built-in night mode ── */
 .nightMode body,
@@ -308,12 +314,13 @@ body,
 }
 
 .nightMode .code-block {
-  background: rgba(255, 255, 255, 0.03);
+  background: #1a1d27;
   border-color: #3a3e4a;
 }
 
 .nightMode .line-num {
   color: #4a5568;
+  background: rgba(0, 0, 0, 0.2);
   border-color: #3a3e4a;
 }
 
@@ -321,12 +328,16 @@ body,
   color: #b6beca;
 }
 
-.nightMode .py-kw  { color: #5ccfe6; }
-.nightMode .py-bi  { color: #82aaff; }
+.nightMode .ig {
+  border-left-color: rgba(255, 255, 255, 0.12);
+}
+
+.nightMode .py-kw  { color: #c084fc; }
+.nightMode .py-bi  { color: #4ade80; }
 .nightMode .py-str { color: #ffd580; }
-.nightMode .py-cm  { color: #5c6370; }
+.nightMode .py-cm  { color: #4ade80; }
 .nightMode .py-num { color: #f78c6c; }
-.nightMode .py-dec { color: #c792ea; }
+.nightMode .py-dec { color: #c084fc; }
 
 /* ── Mobile responsiveness ── */
 @media (max-width: 768px) {

@@ -21,7 +21,7 @@
 (function () {
   // ── Python syntax highlighter ──
   var kwSet = new Set(
-    "False,None,True,and,as,assert,async,await,break,class,continue,def,del,elif,else,except,finally,for,from,global,if,import,in,is,lambda,nonlocal,not,or,pass,raise,return,try,while,with,yield,self".split(",")
+    "False,None,True,and,as,assert,async,await,break,class,continue,def,del,elif,else,except,finally,for,from,global,if,import,in,is,lambda,nonlocal,not,or,pass,raise,return,try,while,with,yield".split(",")
   );
   var biSet = new Set(
     "abs,all,any,bin,bool,bytearray,bytes,callable,chr,complex,dict,dir,divmod,enumerate,eval,exec,filter,float,format,frozenset,getattr,globals,hasattr,hash,help,hex,id,input,int,isinstance,issubclass,iter,len,list,locals,map,max,memoryview,min,next,object,oct,open,ord,pow,print,property,range,repr,reversed,round,set,setattr,slice,sorted,staticmethod,str,sum,super,tuple,type,vars,zip,List,Dict,Set,Tuple,Optional,Union,Any,Callable,Sequence,Iterator,Generator,Type,DefaultDict,Counter,deque,heapq,bisect,math,sys,os,collections,functools,itertools,typing".split(",")
@@ -97,6 +97,23 @@
     return out;
   }
 
+  function buildLineContent(line) {
+    // Count leading spaces for indent guides
+    var spaces = 0;
+    while (spaces < line.length && line[spaces] === " ") spaces++;
+    var code = line.slice(spaces);
+    var html = "";
+    // Emit one <span class="ig"> per full 4-space indent level (border-left = guide line)
+    var levels = Math.floor(spaces / 4);
+    var remainder = spaces % 4;
+    for (var k = 0; k < levels; k++) {
+      html += '<span class="ig">    </span>';
+    }
+    if (remainder > 0) html += " ".repeat(remainder);
+    html += highlightPython(code);
+    return html;
+  }
+
   function renderCodeBlock(el) {
     var raw = el.innerHTML;
     raw = raw.replace(/<\/div>/gi, "\n");
@@ -121,7 +138,7 @@
     lines.forEach(function (line, idx) {
       html += '<div class="code-line">';
       html += '<span class="line-num">' + (idx + 1) + "</span>";
-      html += '<span class="line-code">' + highlightPython(line) + "</span>";
+      html += '<span class="line-code">' + buildLineContent(line) + "</span>";
       html += "</div>";
     });
     html += "</div></div>";
