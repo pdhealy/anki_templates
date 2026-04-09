@@ -120,18 +120,25 @@
   }
 
   function renderCodeBlock(el) {
-    var raw = el.innerHTML;
-    raw = raw.replace(/<\/div>/gi, "\n");
-    raw = raw.replace(/<div[^>]*>/gi, "");
-    raw = raw.replace(/<br\s*\/?>/gi, "\n");
-    raw = raw.replace(/&nbsp;/g, " ");
-    raw = raw.replace(/<[^>]+>/g, "");
+    // Force white-space: pre so innerText preserves every leading space.
+    // This handles all Anki editor variants (<div>, <br>, &nbsp;, spans, etc.)
+    // without fragile regex — the browser normalises the HTML for us.
+    var prevWS = el.style.whiteSpace;
+    el.style.whiteSpace = "pre";
+    var raw = typeof el.innerText !== "undefined" ? el.innerText : el.textContent;
+    el.style.whiteSpace = prevWS;
+
+    // Normalise line endings and whitespace variants used in Anki HTML fields:
+    //   \u2003 = &emsp; (em-space)  → 4 spaces (one Python indent level)
+    //   \u2002 = &ensp; (en-space)  → 2 spaces
+    //   \t     = tab                → 4 spaces
+    //   \u00a0 = &nbsp;             → regular space
     raw = raw
-      .replace(/&lt;/g, "<")
-      .replace(/&gt;/g, ">")
-      .replace(/&amp;/g, "&")
-      .replace(/&quot;/g, '"')
-      .replace(/&#39;/g, "'");
+      .replace(/\r\n?/g, "\n")
+      .replace(/\u2003/g, "    ")
+      .replace(/\u2002/g, "  ")
+      .replace(/\t/g, "    ")
+      .replace(/\u00a0/g, " ");
 
     var lines = raw.split("\n");
     while (lines.length && lines[0].trim() === "") lines.shift();
