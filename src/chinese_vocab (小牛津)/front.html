@@ -1,6 +1,11 @@
 <!-- HTML for Front Template -->
 <div class="topic"> {{Category_Chinese}} ({{Category_Zhuyin}}) | {{Category_English}}  </div>
 
+<label class="zhuyin-toggle" title="Show/hide Zhuyin">
+  <input type="checkbox" id="zhuyinToggle" checked>
+  <span class="toggle-track"><span class="toggle-thumb"></span></span>
+</label>
+
 <!-- <span style="font-size: 150px; "class=mainCharacter>{{Front}}</span> -->
 <div class=mainCharacter>{{Front}}</div>
 <div class="example-chinese">{{Example_Chinese}}</div>
@@ -14,5 +19,9 @@
     el.innerHTML = chars.map((char, i) =>
       `<ruby>${char}<rt>${zhuyinArr[i] || ''}</rt></ruby>`
     ).join('');
+
+    document.getElementById('zhuyinToggle').addEventListener('change', function () {
+      document.body.classList.toggle('zhuyin-hidden', !this.checked);
+    });
   })();
 </script>

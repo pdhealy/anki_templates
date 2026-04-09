@@ -7,6 +7,7 @@
   padding: 20px;
   max-width: 800px;
   margin: 0 auto;
+  position: relative;
 }
 
 /* Topic header styling */
@@ -21,14 +22,70 @@
 
 /* Main character styling */
 .mainCharacter {
-  writing-mode: horizontal-tb;
-  text-orientation: sideways-right;
+  writing-mode: vertical-lr;
   font-size: 14rem;
   line-height: 1.5;
   display: inline-block;
   margin: 20px 0;
   color: #1a1a1a; /* Dark charcoal for light mode */
   text-shadow: 2px 2px 3px rgba(0,0,0,0.2);
+}
+
+.mainCharacter ruby {
+  ruby-position: right;
+}
+
+.mainCharacter rt {
+  font-size: 0.2em;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.zhuyin-hidden .mainCharacter rt {
+  opacity: 0;
+}
+
+/* Zhuyin toggle switch */
+.zhuyin-toggle {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.zhuyin-toggle input[type="checkbox"] {
+  display: none;
+}
+
+.toggle-track {
+  display: block;
+  width: 48px;
+  height: 26px;
+  background: #ccc;
+  border-radius: 13px;
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+.zhuyin-toggle input:checked + .toggle-track {
+  background: #4299e1;
+}
+
+.toggle-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+  transition: transform 0.3s ease;
+}
+
+.zhuyin-toggle input:checked + .toggle-track .toggle-thumb {
+  transform: translateX(22px);
 }
 
 /* Explanation styling */
