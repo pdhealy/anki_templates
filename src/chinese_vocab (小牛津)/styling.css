@@ -22,26 +22,32 @@
 
 /* Main character styling */
 .mainCharacter {
-  writing-mode: vertical-lr;
+  writing-mode: horizontal-tb;
   font-size: 14rem;
   line-height: 1.5;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   margin: 20px 0;
   color: #1a1a1a; /* Dark charcoal for light mode */
   text-shadow: 2px 2px 3px rgba(0,0,0,0.2);
 }
 
-.mainCharacter ruby {
-  ruby-position: right;
+.char-group {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
 }
 
-.mainCharacter rt {
+.char-zhuyin {
+  writing-mode: vertical-lr;
   font-size: 0.2em;
+  line-height: 1;
   opacity: 1;
   transition: opacity 0.3s ease;
+  text-shadow: none;
 }
 
-.zhuyin-hidden .mainCharacter rt {
+.zhuyin-hidden .char-zhuyin {
   opacity: 0;
 }
 
