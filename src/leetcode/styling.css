@@ -1,0 +1,336 @@
+/* ── Color palette ── */
+:root {
+  --bg: #ebebeb;
+  --text: #2b2e37;
+  --accent: #e05a7b;
+  --subtle: #9a9ea8;
+  --surface: #d8d8d8;
+  --code-accent: #22c55e;
+}
+
+body,
+#qa {
+  background-color: var(--bg);
+  transition:
+    color 0.3s ease,
+    background-color 0.3s ease;
+}
+
+/* ── Card base ── */
+.card {
+  font-family: "JetBrains Mono", "Fira Code", "Menlo", monospace;
+  font-size: clamp(16px, 1vw + 13px, 22px);
+  text-align: left;
+  color: var(--text);
+  background-color: var(--bg);
+  padding: 2rem 1.5rem;
+  line-height: 1.7;
+  max-width: 800px;
+  margin: 0 auto;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  transition:
+    color 0.3s ease,
+    background-color 0.3s ease;
+}
+
+/* ── Card header ── */
+.card-header {
+  margin-bottom: 1rem;
+}
+
+/* ── Topic label ── */
+.topic {
+  font-size: clamp(11px, 0.7vw + 9px, 14px);
+  color: var(--accent);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.topic::before {
+  content: "# ";
+}
+
+/* ── LeetCode Title ── */
+.lc-title {
+  font-size: clamp(22px, 2.5vw + 14px, 36px);
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.2;
+  margin: 0.5rem 0 1rem;
+  transition: color 0.3s ease;
+}
+
+/* ── Description ── */
+.lc-description {
+  font-size: clamp(16px, 1vw + 13px, 22px);
+  color: var(--text);
+  font-weight: 400;
+  line-height: 1.7;
+  margin: 0 0 1rem;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  transition: color 0.3s ease;
+}
+
+.lc-description .md-code {
+  background: rgba(0, 0, 0, 0.08);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  font-size: 0.85em;
+  font-family: "JetBrains Mono", "Fira Code", "Menlo", monospace;
+}
+
+.lc-description strong {
+  font-style: italic;
+}
+
+/* ── Divider ── */
+.divider {
+  border: 0;
+  border-top: 1px dashed var(--subtle);
+  margin: 1.5rem 0;
+  transition: border-color 0.3s ease;
+}
+
+/* ── Sections wrapper ── */
+.sections {
+  padding-top: 0.5rem;
+}
+
+.section-item {
+  margin-top: 0.5rem;
+}
+
+/* ── Expandable section labels ── */
+.example-label {
+  font-size: clamp(15px, 1vw + 12px, 24px);
+  color: var(--subtle);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin: 0.5rem 0 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  padding: 0.6em 0 0.2em;
+  border-top: 1px dashed var(--subtle);
+  transition: color 0.2s ease;
+}
+
+.example-label::after {
+  content: "›";
+  display: inline-block;
+  font-size: 1.2em;
+  line-height: 1;
+  margin-left: auto;
+  padding-left: 0.5em;
+  transition: transform 0.25s ease;
+}
+
+.example-label.is-open::after {
+  transform: rotate(90deg);
+}
+
+.example-label.is-empty {
+  cursor: default;
+  opacity: 0.35;
+  touch-action: none;
+}
+
+.example-label.is-empty::after {
+  content: "—";
+  font-size: 1em;
+  opacity: 0.6;
+  transition: none;
+}
+
+/* ── Expandable content ── */
+.example-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease;
+}
+
+.example-content.is-open {
+  max-height: 3000px;
+}
+
+/* ── Section body (Markdown-rendered) ── */
+.desc-body {
+  font-size: clamp(14px, 0.9vw + 11px, 19px);
+  color: var(--text);
+  line-height: 1.6;
+  text-align: left;
+  padding: 0.5rem 0 0.5rem 1rem;
+  border-left: 3px solid var(--subtle);
+  transition:
+    color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.desc-body .md-list {
+  margin: 0.4em 0;
+  padding-left: 1.4em;
+  list-style: disc;
+  text-align: left;
+}
+
+.desc-body .md-list li {
+  margin: 0.25em 0;
+}
+
+.desc-body .md-code {
+  background: rgba(0, 0, 0, 0.08);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  font-size: 0.85em;
+  font-family: "JetBrains Mono", "Fira Code", "Menlo", monospace;
+}
+
+/* ── Code section label ── */
+.code-label {
+  font-size: clamp(15px, 1vw + 12px, 24px);
+  color: var(--subtle);
+  letter-spacing: 1px;
+  font-weight: 600;
+  margin: 0.5rem 0 0;
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.6em 0 0.2em;
+  border-top: 1px dashed var(--subtle);
+  transition: color 0.2s ease;
+}
+
+.code-icon {
+  color: var(--code-accent);
+  letter-spacing: 0;
+  font-style: normal;
+}
+
+/* ── Code block ── */
+.code-block {
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 6px;
+  overflow-x: auto;
+  margin: 0.4rem 0 0.75rem;
+  border: 1px solid var(--surface);
+  font-family: "JetBrains Mono", "Fira Code", "Menlo", monospace;
+  font-size: clamp(13px, 0.8vw + 10px, 17px);
+}
+
+.code-lines {
+  display: table;
+  min-width: 100%;
+  padding: 0.4rem 0;
+}
+
+.code-line {
+  display: table-row;
+}
+
+.line-num {
+  display: table-cell;
+  color: var(--subtle);
+  text-align: right;
+  padding: 0.05em 0.75em 0.05em 0.5em;
+  user-select: none;
+  white-space: nowrap;
+  width: 1%;
+  vertical-align: top;
+  border-right: 1px solid var(--surface);
+}
+
+.line-code {
+  display: table-cell;
+  padding: 0.05em 1em;
+  white-space: pre;
+  color: var(--text);
+  vertical-align: top;
+}
+
+/* ── Python syntax highlighting ── */
+.py-kw  { color: #0891b2; }
+.py-bi  { color: #2563eb; }
+.py-str { color: #d97706; }
+.py-cm  { color: #6b7280; font-style: italic; }
+.py-num { color: #059669; }
+.py-dec { color: #7c3aed; }
+
+/* ── Anki built-in night mode ── */
+.nightMode body,
+.nightMode #qa {
+  background-color: #1e2028;
+}
+
+.nightMode .card {
+  background-color: #1e2028;
+  color: #b6beca;
+}
+
+.nightMode .topic {
+  color: #5ccfe6;
+}
+
+.nightMode .lc-title {
+  color: #dce1ea;
+}
+
+.nightMode .lc-description {
+  color: #b6beca;
+}
+
+.nightMode .lc-description .md-code,
+.nightMode .desc-body .md-code {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.nightMode .divider,
+.nightMode .example-label,
+.nightMode .code-label {
+  border-color: #3a3e4a;
+}
+
+.nightMode .example-label {
+  color: #6b7280;
+}
+
+.nightMode .desc-body {
+  border-color: #3a3e4a;
+  color: #b6beca;
+}
+
+.nightMode .code-block {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: #3a3e4a;
+}
+
+.nightMode .line-num {
+  color: #4a5568;
+  border-color: #3a3e4a;
+}
+
+.nightMode .line-code {
+  color: #b6beca;
+}
+
+.nightMode .py-kw  { color: #5ccfe6; }
+.nightMode .py-bi  { color: #82aaff; }
+.nightMode .py-str { color: #ffd580; }
+.nightMode .py-cm  { color: #5c6370; }
+.nightMode .py-num { color: #f78c6c; }
+.nightMode .py-dec { color: #c792ea; }
+
+/* ── Mobile responsiveness ── */
+@media (max-width: 768px) {
+  .card {
+    padding: 1.5rem 1rem;
+  }
+}

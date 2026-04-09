@@ -1,0 +1,185 @@
+<!-- HTML for Back Template -->
+
+{{FrontSide}}
+
+<hr class="divider" />
+
+<div class="sections">
+  <div class="section-item">
+    <div class="code-label"><span class="code-icon">&lt;/&gt;</span> Code</div>
+    <div class="code-content">{{Code}}</div>
+  </div>
+  <div class="section-item">
+    <div class="example-label">Constraints</div>
+    <div class="example-content">
+      <div class="desc-body constraints-body">{{Constraints}}</div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  // ── Python syntax highlighter ──
+  var kwSet = new Set(
+    "False,None,True,and,as,assert,async,await,break,class,continue,def,del,elif,else,except,finally,for,from,global,if,import,in,is,lambda,nonlocal,not,or,pass,raise,return,try,while,with,yield,self".split(",")
+  );
+  var biSet = new Set(
+    "abs,all,any,bin,bool,bytearray,bytes,callable,chr,complex,dict,dir,divmod,enumerate,eval,exec,filter,float,format,frozenset,getattr,globals,hasattr,hash,help,hex,id,input,int,isinstance,issubclass,iter,len,list,locals,map,max,memoryview,min,next,object,oct,open,ord,pow,print,property,range,repr,reversed,round,set,setattr,slice,sorted,staticmethod,str,sum,super,tuple,type,vars,zip,List,Dict,Set,Tuple,Optional,Union,Any,Callable,Sequence,Iterator,Generator,Type,DefaultDict,Counter,deque,heapq,bisect,math,sys,os,collections,functools,itertools,typing".split(",")
+  );
+
+  function esc(s) {
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  function highlightPython(line) {
+    var out = "";
+    var i = 0;
+    while (i < line.length) {
+      var ch = line[i];
+
+      // Comment
+      if (ch === "#") {
+        out += '<span class="py-cm">' + esc(line.slice(i)) + "</span>";
+        break;
+      }
+
+      // String
+      if (ch === '"' || ch === "'") {
+        var q = ch;
+        var j = i + 1;
+        while (j < line.length && line[j] !== q) {
+          if (line[j] === "\\") j++;
+          j++;
+        }
+        j++;
+        out += '<span class="py-str">' + esc(line.slice(i, j)) + "</span>";
+        i = j;
+        continue;
+      }
+
+      // Number
+      if (/\d/.test(ch)) {
+        var j = i;
+        while (j < line.length && /[\d._xXbBoO]/.test(line[j])) j++;
+        out += '<span class="py-num">' + esc(line.slice(i, j)) + "</span>";
+        i = j;
+        continue;
+      }
+
+      // Decorator
+      if (ch === "@") {
+        var j = i + 1;
+        while (j < line.length && /\w/.test(line[j])) j++;
+        out += '<span class="py-dec">' + esc(line.slice(i, j)) + "</span>";
+        i = j;
+        continue;
+      }
+
+      // Identifier, keyword, or builtin
+      if (/[a-zA-Z_]/.test(ch)) {
+        var j = i;
+        while (j < line.length && /\w/.test(line[j])) j++;
+        var word = line.slice(i, j);
+        if (kwSet.has(word)) {
+          out += '<span class="py-kw">' + esc(word) + "</span>";
+        } else if (biSet.has(word)) {
+          out += '<span class="py-bi">' + esc(word) + "</span>";
+        } else {
+          out += esc(word);
+        }
+        i = j;
+        continue;
+      }
+
+      out += esc(ch);
+      i++;
+    }
+    return out;
+  }
+
+  function renderCodeBlock(el) {
+    var raw = el.innerHTML;
+    raw = raw.replace(/<\/div>/gi, "\n");
+    raw = raw.replace(/<div[^>]*>/gi, "");
+    raw = raw.replace(/<br\s*\/?>/gi, "\n");
+    raw = raw.replace(/&nbsp;/g, " ");
+    raw = raw.replace(/<[^>]+>/g, "");
+    raw = raw
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/&amp;/g, "&")
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'");
+
+    var lines = raw.split("\n");
+    while (lines.length && lines[0].trim() === "") lines.shift();
+    while (lines.length && lines[lines.length - 1].trim() === "") lines.pop();
+
+    if (!lines.length) return;
+
+    var html = '<div class="code-block"><div class="code-lines">';
+    lines.forEach(function (line, idx) {
+      html += '<div class="code-line">';
+      html += '<span class="line-num">' + (idx + 1) + "</span>";
+      html += '<span class="line-code">' + highlightPython(line) + "</span>";
+      html += "</div>";
+    });
+    html += "</div></div>";
+
+    el.outerHTML = html;
+  }
+
+  var codeContent = document.querySelector(".code-content");
+  if (codeContent) renderCodeBlock(codeContent);
+
+  // ── Toggle expandable sections (only uninitialised labels) ──
+  document.querySelectorAll(".example-label:not([data-lc-init])").forEach(function (label) {
+    label.setAttribute("data-lc-init", "1");
+
+    var content = label.nextElementSibling;
+    var bodyEl = content ? content.querySelector(".desc-body") : null;
+    var rawText = bodyEl
+      ? bodyEl.textContent
+      : content
+        ? content.textContent
+        : "";
+    var isEmpty = rawText.replace(/[\s\u00a0\u200b\ufeff]/g, "") === "";
+
+    if (isEmpty) {
+      label.classList.add("is-empty");
+      return;
+    }
+
+    var tapped = false;
+
+    function toggle() {
+      var isOpen = content.classList.contains("is-open");
+      content.classList.toggle("is-open", !isOpen);
+      label.classList.toggle("is-open", !isOpen);
+    }
+
+    label.addEventListener(
+      "touchstart",
+      function (e) {
+        tapped = true;
+        toggle();
+        e.preventDefault();
+      },
+      { passive: false }
+    );
+
+    label.addEventListener("click", function () {
+      if (tapped) {
+        tapped = false;
+        return;
+      }
+      toggle();
+    });
+  });
+
+  // ── Markdown rendering for back-side fields ──
+  if (window.ankiRenderMarkdown) {
+    document.querySelectorAll(".constraints-body").forEach(window.ankiRenderMarkdown);
+  }
+})();
+</script>
