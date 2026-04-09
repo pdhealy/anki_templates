@@ -24,7 +24,10 @@
     "False,None,True,and,as,assert,async,await,break,class,continue,def,del,elif,else,except,finally,for,from,global,if,import,in,is,lambda,nonlocal,not,or,pass,raise,return,try,while,with,yield".split(",")
   );
   var biSet = new Set(
-    "abs,all,any,bin,bool,bytearray,bytes,callable,chr,complex,dict,dir,divmod,enumerate,eval,exec,filter,float,format,frozenset,getattr,globals,hasattr,hash,help,hex,id,input,int,isinstance,issubclass,iter,len,list,locals,map,max,memoryview,min,next,object,oct,open,ord,pow,print,property,range,repr,reversed,round,set,setattr,slice,sorted,staticmethod,str,sum,super,tuple,type,vars,zip,List,Dict,Set,Tuple,Optional,Union,Any,Callable,Sequence,Iterator,Generator,Type,DefaultDict,Counter,deque,heapq,bisect,math,sys,os,collections,functools,itertools,typing".split(",")
+    "abs,all,any,bin,callable,chr,dir,divmod,enumerate,eval,exec,filter,format,getattr,globals,hasattr,hash,help,hex,id,input,isinstance,issubclass,iter,len,locals,map,max,memoryview,min,next,oct,open,ord,pow,print,property,range,repr,reversed,round,setattr,slice,sorted,staticmethod,sum,super,vars,zip,heapq,bisect,math,sys,os,collections,functools,itertools,typing".split(",")
+  );
+  var tySet = new Set(
+    "bool,bytearray,bytes,complex,dict,float,frozenset,int,list,object,set,str,tuple,type,List,Dict,Set,Tuple,Optional,Union,Any,Callable,Sequence,Iterator,Generator,Type,DefaultDict,Counter,deque".split(",")
   );
 
   function esc(s) {
@@ -82,6 +85,8 @@
         var word = line.slice(i, j);
         if (kwSet.has(word)) {
           out += '<span class="py-kw">' + esc(word) + "</span>";
+        } else if (tySet.has(word)) {
+          out += '<span class="py-ty">' + esc(word) + "</span>";
         } else if (biSet.has(word)) {
           out += '<span class="py-bi">' + esc(word) + "</span>";
         } else {
