@@ -143,9 +143,10 @@
 
 /* Table headers and cells */
 .section-header {
-  width: 100px;
+  width: 1px;
+  white-space: nowrap;
   padding: 12px 15px;
-  text-align: right;
+  text-align: left;
   background-color: #f1f3f5;
   color: #495057;
   font-weight: bold;
