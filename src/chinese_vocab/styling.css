@@ -146,8 +146,8 @@
 }
 
 /* Match section-header font size to its paired data cell */
-.content-table tr:nth-child(2) .section-header { font-size: 42px; }  /* 漢字 = .chinese */
-.content-table tr:nth-child(3) .section-header { font-size: 24px; }  /* 英文 = .english */
+.header-chinese { font-size: 42px; }  /* 漢字 = .chinese */
+.header-english { font-size: 24px; }  /* 英文 = .english */
 
 
 .content-table td {
