@@ -1,6 +1,6 @@
 {{FrontSide}}
 
-<hr id="answer">
+<hr id="answer" />
 
 <table class="content-table">
   <!-- <tr>
@@ -16,7 +16,7 @@
     <td class="english">{{English}}</td>
   </tr>
   <tr>
-    <th class="section-header">Example</th>
+    <th class="section-header">Ex.</th>
     <td class="description">
       <div class="desc-chinese">{{Example_Chinese}}</div>
       <!-- <div class="desc-zhuyin">{{Example_Zhuyin}}</div> -->
@@ -26,16 +26,16 @@
 </table>
 
 <script>
-(function () {
-  function initBack() {
-    if (!window.applyZhuyinAll || !window.pinyinPro) {
-      setTimeout(initBack, 50);
-      return;
+  (function () {
+    function initBack() {
+      if (!window.applyZhuyinAll || !window.pinyinPro) {
+        setTimeout(initBack, 50);
+        return;
+      }
+      window.applyZhuyinAll(".chinese");
+      window.applyZhuyinAll(".desc-chinese");
+      window.applyZhuyinAll("th.section-header");
     }
-    window.applyZhuyinAll('.chinese');
-    window.applyZhuyinAll('.desc-chinese');
-    window.applyZhuyinAll('th.section-header');
-  }
-  initBack();
-})();
+    initBack();
+  })();
 </script>

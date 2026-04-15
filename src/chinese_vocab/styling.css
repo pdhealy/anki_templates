@@ -133,7 +133,7 @@
   background: white;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  font-size: 2rem;
+  font-size: 2.5rem;
 }
 
 /* Zhuyin annotations inside the table — larger ratio so they're readable at 2.5rem */
