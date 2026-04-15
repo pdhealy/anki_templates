@@ -1,7 +1,7 @@
 .card {
   font-family: "Microsoft YaHei", "PingFang SC", arial, sans-serif;
   font-size: 18px;
-  line-height: 1.6;
+  line-height: 1.6;desc-english
   color: #333333;
   background-color: #f8f9fa;
   padding: 20px;
@@ -132,12 +132,12 @@
   background: white;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  font-size: 2.5rem;
+  font-size: 2rem;
 }
 
 /* Zhuyin annotations inside the table — larger ratio so they're readable at 2.5rem */
 .content-table .char-zhuyin {
-  font-size: 0.4em;
+  font-size: 0.3em;
 }
 
 /* Table headers and cells */
@@ -152,8 +152,13 @@
 }
 
 
-.content-table td {
+.content-table td,
+.content-table th {
   padding: 12px 15px;
+  writing-mode: horizontal-tb;
+}
+
+.content-table td {
   text-align: left;
 }
 
