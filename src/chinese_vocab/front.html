@@ -1,0 +1,187 @@
+<!-- HTML for Front Template -->
+<div class="header-container">
+  <div class="topic"> {{Category_Chinese}} ({{Category_Zhuyin}}) | {{Category_English}}  </div>
+
+  <label class="zhuyin-toggle" title="Show/hide Zhuyin">
+    <input type="checkbox" id="zhuyinToggle" checked>
+    <span class="toggle-track"><span class="toggle-thumb"></span></span>
+  </label>
+</div>
+
+<!-- <span style="font-size: 150px; "class=mainCharacter>{{Front}}</span> -->
+<div class="mainCharacter">{{Front}}</div>
+<div class="example-chinese">{{Example_Chinese}}</div>
+
+<script src="https://unpkg.com/pinyin-pro@3.28.1"></script>
+<script>
+  (function () {
+    const initials = { b: 'ㄅ', p: 'ㄆ', m: 'ㄇ', f: 'ㄈ', d: 'ㄉ', t: 'ㄊ', n: 'ㄋ', l: 'ㄌ', g: 'ㄍ', k: 'ㄎ', h: 'ㄏ', j: 'ㄐ', q: 'ㄑ', x: 'ㄒ', zh: 'ㄓ', ch: 'ㄔ', sh: 'ㄕ', r: 'ㄖ', z: 'ㄗ', c: 'ㄘ', s: 'ㄙ' };
+    const finals = { a: 'ㄚ', o: 'ㄛ', e: 'ㄜ', ai: 'ㄞ', ei: 'ㄟ', ao: 'ㄠ', ou: 'ㄡ', an: 'ㄢ', ang: 'ㄤ', en: 'ㄣ', eng: 'ㄥ', er: 'ㄦ', u: 'ㄨ', ua: 'ㄨㄚ', uo: 'ㄨㄛ', uai: 'ㄨㄞ', ui: 'ㄨㄟ', uan: 'ㄨㄢ', uang: 'ㄨㄤ', un: 'ㄨㄣ', ueng: 'ㄨㄥ', ong: 'ㄨㄥ', i: 'ㄧ', ia: 'ㄧㄚ', ie: 'ㄧㄝ', iao: 'ㄧㄠ', iu: 'ㄧㄡ', ian: 'ㄧㄢ', iang: 'ㄧㄤ', in: 'ㄧㄣ', ing: 'ㄧㄥ', ü: 'ㄩ', üe: 'ㄩㄝ', ue: 'ㄩㄝ', üan: 'ㄩㄢ', ün: 'ㄩㄣ', iong: 'ㄩㄥ' };
+    const individuals = { zhi: 'ㄓ', chi: 'ㄔ', shi: 'ㄕ', ri: 'ㄖ', zi: 'ㄗ', ci: 'ㄘ', si: 'ㄙ', a: 'ㄚ', o: 'ㄛ', e: 'ㄜ', ai: 'ㄞ', ei: 'ㄟ', ao: 'ㄠ', ou: 'ㄡ', an: 'ㄢ', ang: 'ㄤ', en: 'ㄣ', eng: 'ㄥ', er: 'ㄦ', r: 'ㄦ', wu: 'ㄨ', wa: 'ㄨㄚ', wo: 'ㄨㄛ', wai: 'ㄨㄞ', wei: 'ㄨㄟ', wan: 'ㄨㄢ', wang: 'ㄨㄤ', wen: 'ㄨㄣ', weng: 'ㄨㄥ', yi: 'ㄧ', ya: 'ㄧㄚ', ye: 'ㄧㄝ', yao: 'ㄧㄠ', you: 'ㄧㄡ', yan: 'ㄧㄢ', yang: 'ㄧㄤ', yin: 'ㄧㄣ', ying: 'ㄧㄥ', yu: 'ㄩ', yue: 'ㄩㄝ', yuan: 'ㄩㄢ', yun: 'ㄩㄣ', yong: 'ㄩㄥ' };
+    const toneMap = { ā: 'a1', á: 'a2', ǎ: 'a3', à: 'a4', ē: 'e1', é: 'e2', ě: 'e3', è: 'e4', ī: 'i1', í: 'i2', ǐ: 'i3', ì: 'i4', ō: 'o1', ó: 'o2', ǒ: 'o3', ò: 'o4', ū: 'u1', ú: 'u2', ǔ: 'u3', ù: 'u4', ǖ: 'ü1', ǘ: 'ü2', ǚ: 'ü3', ǜ: 'ü4' };
+    const toneNumberToSymbol = { 0: '˙', 1: '', 2: 'ˊ', 3: 'ˇ', 4: 'ˋ', 5: '˙' };
+
+    function findAccentedChars(text) {
+        const accentsFound = {};
+        for (let i = 0; i < text.length; i++) {
+            for (const accentedChar in toneMap) {
+                if (text[i].toLowerCase() === accentedChar) {
+                    accentsFound[i] = text[i].toLowerCase() === text[i] ? toneMap[accentedChar] : toneMap[accentedChar].toUpperCase();
+                }
+            }
+        }
+        return accentsFound;
+    }
+
+    function removeAccents(accentedChars, text) {
+        let output = '';
+        for (let i = 0; i < text.length; i++) {
+            output += i in accentedChars ? accentedChars[i][0] : text[i];
+        }
+        return output;
+    }
+
+    function getKeys(obj) { return Object.keys(obj); }
+    function findBetween(list, min, max) {
+        for (let i = 0; i < list.length; i++) {
+            if (list[i] > max) break;
+            if (list[i] >= min) return list[i];
+        }
+        return -1;
+    }
+    const lenComp = (a, b) => a.length === b.length ? 0 : (a.length < b.length ? 1 : -1);
+    const individualRexp = new RegExp('^(' + getKeys(individuals).sort(lenComp).join('|') + ')(\\d)?', 'i');
+    const initialFinalRexp = new RegExp('^(' + getKeys(initials).sort(lenComp).join('|') + ')(' + getKeys(finals).sort(lenComp).join('|') + ')(\\d)?', 'i');
+
+    function pinyinToZhuyin(pinyinText) {
+        if (!pinyinText) return pinyinText;
+        const accentedChars = findAccentedChars(pinyinText);
+        const sortedAccentedIndicies = getKeys(accentedChars).map(x => parseInt(x, 10));
+        const text = removeAccents(accentedChars, pinyinText);
+
+        const parseToken = function (i) {
+            let parse, detectedToneIdx;
+            const token = { start: i };
+            parse = text.slice(i).match(initialFinalRexp);
+            if (parse) {
+                parse = parse.map(x => x ? x.toLowerCase() : x);
+                token.zhuyin = initials[parse[1]] + finals[parse[2]];
+                token.type = 'pinyin';
+                if (typeof parse[3] !== 'undefined') token.tone = parseInt(parse[3], 10);
+                else {
+                    detectedToneIdx = findBetween(sortedAccentedIndicies, i, i + parse[0].length);
+                    token.tone = detectedToneIdx >= 0 ? +accentedChars[detectedToneIdx][1] : 5;
+                }
+            } else {
+                parse = text.slice(i).match(individualRexp);
+                if (parse) {
+                    parse = parse.map(x => x ? x.toLowerCase() : x);
+                    token.zhuyin = individuals[parse[1]];
+                    token.type = 'pinyin';
+                    if (typeof parse[2] !== 'undefined') token.tone = parseInt(parse[2], 10);
+                    else {
+                        detectedToneIdx = findBetween(sortedAccentedIndicies, i, i + parse[0].length);
+                        token.tone = detectedToneIdx >= 0 ? +accentedChars[detectedToneIdx][1] : 5;
+                    }
+                } else {
+                    token.type = 'other';
+                    parse = [text[i]];
+                }
+            }
+            token.parse = parse;
+            return token;
+        };
+
+        const tokens = [];
+        let i = 0;
+        while (i < text.length) {
+            const curToken = parseToken(i);
+            tokens.push(curToken);
+            i += curToken.parse[0].length;
+        }
+
+        return tokens.map(token => {
+            if (token.type === 'other') return token.parse.join('');
+            return token.zhuyin + toneNumberToSymbol[token.tone];
+        }).join('')
+          .replace(/ㄐㄨ/g, 'ㄐㄩ').replace(/ㄑㄨ/g, 'ㄑㄩ').replace(/ㄒㄨ/g, 'ㄒㄩ')
+          .replace(/ㄓㄧ/g, 'ㄓ').replace(/ㄔㄧ/g, 'ㄔ').replace(/ㄕㄧ/g, 'ㄕ').replace(/ㄖㄧ/g, 'ㄖ')
+          .replace(/ㄗㄧ/g, 'ㄗ').replace(/ㄘㄧ/g, 'ㄘ').replace(/ㄙㄧ/g, 'ㄙ')
+          .replace(/\u200b'/g, '');
+    }
+
+    // Attach to window so back.html can optionally use it
+    window.pinyinToZhuyin = pinyinToZhuyin;
+
+    function applyZhuyin(elementSelector) {
+      const el = document.querySelector(elementSelector);
+      if (!el || !el.textContent.trim()) return;
+
+      if (el.querySelector('.char-group')) return; // Already applied
+
+      const text = el.textContent.trim();
+      const chars = [...text];
+      
+      if (!window.pinyinPro) {
+        return;
+      }
+      
+      const { pinyin } = window.pinyinPro;
+      const pyArray = pinyin(text, { toneType: 'num', type: 'array' });
+
+      el.innerHTML = chars.map((char, i) => {
+        const py = pyArray[i] || '';
+        let zy = char;
+        const isChinese = /[\u4e00-\u9fa5]/.test(char);
+        
+        if (isChinese) {
+          try {
+            zy = pinyinToZhuyin(py) || py;
+          } catch(e) {
+            zy = py;
+          }
+        }
+        
+        if (!isChinese || zy.trim() === char.trim() || !zy.trim()) {
+          return char; // Non-chinese or punctuation
+        }
+        return `<span class="char-group">${char}<span class="char-zhuyin">${zy}</span></span>`;
+      }).join('');
+    }
+
+    function init() {
+      if (window.pinyinPro) {
+        // Fix Traditional Chinese characters that pinyin-pro 3.x maps incorrectly.
+        // 嗎/麼 have only one modern Mandarin reading (both neutral tone).
+        // 著/地/得 are polyphonic — override their most-common particle readings.
+        const { customPinyin } = window.pinyinPro;
+        if (customPinyin) {
+          customPinyin({
+            '嗎': 'ma',   // question particle (Traditional 吗); always neutral
+            '麼': 'me',   // in 什麼/怎麼/這麼 (Traditional 么); always neutral
+            '著': 'zhe',  // aspect particle (Traditional 着); neutral — overrides zhù/zháo
+            '地': 'de',   // adverb particle; neutral — overrides dì (earth/ground)
+            '得': 'de',   // complement particle; neutral — overrides dé (to get)
+          });
+        }
+        applyZhuyin('.mainCharacter');
+        applyZhuyin('.example-chinese');
+      } else {
+        setTimeout(init, 50); // wait for script to load
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+
+    const toggle = document.getElementById('zhuyinToggle');
+    if (toggle) {
+      toggle.addEventListener('change', function () {
+        document.body.classList.toggle('zhuyin-hidden', !this.checked);
+      });
+    }
+  })();
+</script>
