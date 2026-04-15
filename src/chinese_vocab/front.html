@@ -2,10 +2,9 @@
 <div class="header-container">
   <div class="topic"> {{Category_Chinese}} ({{Category_Zhuyin}}) | {{Category_English}}  </div>
 
-  <label class="zhuyin-toggle" title="Show/hide Zhuyin">
-    <input type="checkbox" id="zhuyinToggle" checked>
+  <button class="zhuyin-toggle is-on" id="zhuyinToggle" title="Show/hide Zhuyin">
     <span class="toggle-track"><span class="toggle-thumb"></span></span>
-  </label>
+  </button>
 </div>
 
 <!-- <span style="font-size: 150px; "class=mainCharacter>{{Front}}</span> -->
@@ -179,8 +178,9 @@
 
     const toggle = document.getElementById('zhuyinToggle');
     if (toggle) {
-      toggle.addEventListener('change', function () {
-        document.body.classList.toggle('zhuyin-hidden', !this.checked);
+      toggle.addEventListener('click', function () {
+        const isOn = this.classList.toggle('is-on');
+        document.body.classList.toggle('zhuyin-hidden', !isOn);
       });
     }
   })();
