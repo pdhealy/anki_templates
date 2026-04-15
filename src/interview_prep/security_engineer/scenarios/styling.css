@@ -1,0 +1,257 @@
+<!-- CSS for Styling -->
+
+/* ── Color palette ── */
+:root {
+  --bg: #ebebeb;
+  --text: #2b2e37;
+  --accent: #e05a7b;
+  --subtle: #9a9ea8;
+  --surface: #d8d8d8;
+}
+
+body,
+#qa {
+  background-color: var(--bg);
+  transition:
+    color 0.3s ease,
+    background-color 0.3s ease;
+}
+
+/* ── Card base ── */
+.card {
+  font-family: "JetBrains Mono", "Fira Code", "Menlo", monospace;
+  font-size: clamp(16px, 1vw + 13px, 22px);
+  text-align: left;
+  color: var(--text);
+  background-color: var(--bg);
+  padding: 2rem 1.5rem;
+  line-height: 1.7;
+  max-width: 800px;
+  margin: 0 auto;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  transition:
+    color 0.3s ease,
+    background-color 0.3s ease;
+}
+
+/* ── Card header ── */
+.card-header {
+  margin-bottom: 1rem;
+}
+
+/* ── Topic label ── */
+.topic {
+  font-size: clamp(11px, 0.7vw + 9px, 14px);
+  color: var(--accent);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.topic::before {
+  content: "# ";
+}
+
+/* ── Scenario header ── */
+.scenario-header {
+  font-size: clamp(13px, 0.9vw + 10px, 17px);
+  color: var(--subtle);
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+  transition: color 0.3s ease;
+}
+
+/* ── Question / Description ── */
+.question {
+  margin: 1rem 0;
+}
+
+.description {
+  font-size: clamp(20px, 1.5vw + 15px, 20px);
+  color: var(--text);
+  font-weight: 400;
+  padding: 0.75rem 0 0.75rem 1rem;
+  border-left: 3px solid var(--accent);
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+  text-align: left;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  transition:
+    color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+/* ── Markdown inside .description ── */
+.description .md-list {
+  margin: 0.4em 0;
+  padding-left: 1.4em;
+  list-style: disc;
+  text-align: left;
+}
+
+.description .md-list li {
+  margin: 0.2em 0;
+}
+
+.description .md-code {
+  background: rgba(0, 0, 0, 0.08);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  font-size: 0.85em;
+  font-family: "JetBrains Mono", "Fira Code", "Menlo", monospace;
+}
+
+/* ── Divider ── */
+.divider {
+  border: 0;
+  border-top: 1px dashed var(--subtle);
+  margin: 1.5rem 0;
+  transition: border-color 0.3s ease;
+}
+
+/* ── Back section (direct answer) ── */
+.back-section {
+  margin-bottom: 1rem;
+}
+
+/* ── Sections wrapper ── */
+.sections {
+  padding-top: 0.5rem;
+}
+
+.section-item {
+  margin-top: 0.5rem;
+}
+
+/* ── Expandable section labels ── */
+.example-label {
+  font-size: clamp(15px, 1vw + 12px, 24px);
+  color: var(--subtle);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin: 0.5rem 0 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  padding: 0.6em 0 0.2em;
+  border-top: 1px dashed var(--subtle);
+  transition: color 0.2s ease;
+}
+
+.example-label::after {
+  content: "›";
+  display: inline-block;
+  font-size: 1.2em;
+  line-height: 1;
+  margin-left: auto;
+  padding-left: 0.5em;
+  transition: transform 0.25s ease;
+}
+
+.example-label.is-open::after {
+  transform: rotate(90deg);
+}
+
+.example-label.is-empty {
+  cursor: default;
+  opacity: 0.35;
+  touch-action: none;
+}
+
+.example-label.is-empty::after {
+  content: "—";
+  font-size: 1em;
+  opacity: 0.6;
+  transition: none;
+}
+
+/* ── Expandable content ── */
+.example-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease;
+}
+
+.example-content.is-open {
+  max-height: 2000px;
+}
+
+/* ── Section body (Markdown-rendered) ── */
+.desc-body {
+  font-size: clamp(14px, 0.9vw + 11px, 19px);
+  color: var(--text);
+  line-height: 1.5;
+  text-align: left;
+  padding: 0.5rem 0 0.5rem 1rem;
+  border-left: 3px solid var(--subtle);
+  transition:
+    color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.desc-body .md-list {
+  margin: 0.4em 0;
+  padding-left: 1.4em;
+  list-style: disc;
+  text-align: left;
+}
+
+.desc-body .md-list li {
+  margin: 0.25em 0;
+}
+
+.desc-body .md-code {
+  background: rgba(0, 0, 0, 0.08);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  font-size: 0.85em;
+  font-family: "JetBrains Mono", "Fira Code", "Menlo", monospace;
+}
+
+/* ── Anki built-in night mode ── */
+.nightMode .card {
+  background-color: #1e2028;
+  color: #b6beca;
+}
+
+.nightMode .topic {
+  color: #5ccfe6;
+}
+
+.nightMode .description {
+  border-color: #5ccfe6;
+  color: #b6beca;
+}
+
+.nightMode .divider,
+.nightMode .example-label {
+  border-color: #3a3e4a;
+}
+
+.nightMode .example-label {
+  color: #6b7280;
+}
+
+.nightMode .description .md-code,
+.nightMode .desc-body .md-code {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+
+
+/* ── Mobile responsiveness ── */
+@media (max-width: 768px) {
+  .card {
+    padding: 1.5rem 1rem;
+  }
+}

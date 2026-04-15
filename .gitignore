@@ -1,5 +1,6 @@
 # Custom folders
-src/interview_prep/
+.assets/
+.planning/
 
 # Reference documents
 docs/
@@ -68,7 +69,7 @@ temp/
 .bash_history
 .zsh_history
 
-# Claude Code
+# AI Coding Assistances
 .claude/
 .mcp.json
 CLAUDE.md

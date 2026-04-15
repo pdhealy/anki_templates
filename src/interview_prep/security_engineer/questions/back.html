@@ -1,0 +1,75 @@
+<!-- HTML for Back Template -->
+
+{{FrontSide}}
+
+<hr class="divider" />
+
+{{#Back}}
+  <div class="back-section">
+    <div class="desc-body">{{Back}}</div>
+  </div>
+  {{/Back}}
+<div class="back-wrapper">
+  <div class="sections">
+    <div class="section-item">
+      <div class="example-label">Explanation</div>
+      <div class="example-content">
+        <div class="desc-body">{{Explanation}}</div>
+      </div>
+    </div>
+    <div class="section-item">
+      <div class="example-label">Key Mitigations</div>
+      <div class="example-content">
+        <div class="desc-body">{{Key Mitigations}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll(".example-label").forEach(function (label) {
+    var content = label.nextElementSibling;
+    var bodyEl = content ? content.querySelector(".desc-body") : null;
+    var rawText = bodyEl
+      ? bodyEl.textContent
+      : content
+        ? content.textContent
+        : "";
+    var isEmpty = rawText.replace(/[\s\u00a0\u200b\ufeff]/g, "") === "";
+
+    if (isEmpty) {
+      label.classList.add("is-empty");
+      return;
+    }
+
+    var tapped = false;
+
+    function toggle() {
+      var isOpen = content.classList.contains("is-open");
+      content.classList.toggle("is-open", !isOpen);
+      label.classList.toggle("is-open", !isOpen);
+    }
+
+    label.addEventListener(
+      "touchstart",
+      function (e) {
+        tapped = true;
+        toggle();
+        e.preventDefault();
+      },
+      { passive: false },
+    );
+
+    label.addEventListener("click", function () {
+      if (tapped) {
+        tapped = false;
+        return;
+      }
+      toggle();
+    });
+  });
+
+  if (window.ankiRenderMarkdown) {
+    document.querySelectorAll(".desc-body").forEach(window.ankiRenderMarkdown);
+  }
+</script>
