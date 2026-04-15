@@ -132,6 +132,12 @@
   background: white;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  font-size: 2.5rem;
+}
+
+/* Zhuyin annotations inside the table — larger ratio so they're readable at 2.5rem */
+.content-table .char-zhuyin {
+  font-size: 0.4em;
 }
 
 /* Table headers and cells */
@@ -144,10 +150,6 @@
   font-weight: bold;
   border-right: 2px solid #e9ecef;
 }
-
-/* Match section-header font size to its paired data cell */
-.header-chinese { font-size: 42px; }  /* 漢字 = .chinese */
-.header-english { font-size: 24px; }  /* 英文 = .english */
 
 
 .content-table td {
@@ -162,7 +164,6 @@
 
 /* Specific section styling */
 .zhuyin {
-  font-size: 42px;
   color: #1a73e8;
 }
 
@@ -172,12 +173,10 @@
 }
 
 .chinese {
-  font-size: 42px;
   color: #2c3e50;
 }
 
 .english {
-  font-size: 24px;
   color: #2c3e50;
 }
 
@@ -186,19 +185,16 @@
 }
 
 .desc-chinese {
-  font-size: 3rem;
   margin-bottom: 8px;
   color: #2c3e50;
 }
 
 .desc-zhuyin {
-  font-size: 3rem;
   margin-bottom: 8px;
   color: #1a73e8;
 }
 
 .desc-english {
-  font-size: 3rem;
   color: #495057;
 }
 
