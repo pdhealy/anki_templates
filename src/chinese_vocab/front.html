@@ -139,7 +139,8 @@
         if (!isChinese || zy.trim() === char.trim() || !zy.trim()) {
           return char; // Non-chinese or punctuation
         }
-        return `<span class="char-group">${char}<span class="char-zhuyin">${zy}</span></span>`;
+        const zyChars = [...zy].map(c => `<span>${c}</span>`).join('');
+        return `<span class="char-group">${char}<span class="char-zhuyin">${zyChars}</span></span>`;
       }).join('');
     }
 

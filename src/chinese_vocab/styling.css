@@ -47,14 +47,13 @@
 }
 
 .char-zhuyin {
-  writing-mode: vertical-lr;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
   font-size: 0.2em;
   line-height: 1;
-  letter-spacing: 0.5em;
-  margin-bottom: -0.5em; /* Compensate for trailing letter-spacing to fix vertical centering */
-  margin-left: 0.1em; /* Add slight separation from main character */
+  margin-left: 0.1em;
   align-self: center;
-  text-align: center;
   opacity: 1;
   transition: opacity 0.3s ease;
   text-shadow: none;
