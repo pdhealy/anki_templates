@@ -178,9 +178,22 @@
 
     const toggle = document.getElementById('zhuyinToggle');
     if (toggle) {
-      toggle.addEventListener('click', function () {
-        const isOn = this.classList.toggle('is-on');
+      var tapped = false;
+
+      function doToggle() {
+        const isOn = toggle.classList.toggle('is-on');
         document.body.classList.toggle('zhuyin-hidden', !isOn);
+      }
+
+      toggle.addEventListener('touchstart', function (e) {
+        tapped = true;
+        doToggle();
+        e.preventDefault();
+      }, { passive: false });
+
+      toggle.addEventListener('click', function () {
+        if (tapped) { tapped = false; return; }
+        doToggle();
       });
     }
   })();
