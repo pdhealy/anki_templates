@@ -1,6 +1,6 @@
 <!-- HTML for Front Template -->
 <div class="header-container">
-  <div class="topic"> {{Category_Chinese}} ({{Category_Zhuyin}}) | {{Category_English}}  </div>
+  <div class="topic"><span class="category-chinese">{{Category_Chinese}}</span> | {{Category_English}}</div>
 
   <button class="zhuyin-toggle is-on" id="zhuyinToggle" title="Show/hide Zhuyin">
     <span class="toggle-track"><span class="toggle-thumb"></span></span>
@@ -112,19 +112,14 @@
     // Attach to window so back.html can optionally use it
     window.pinyinToZhuyin = pinyinToZhuyin;
 
-    function applyZhuyin(elementSelector) {
-      const el = document.querySelector(elementSelector);
+    function applyZhuyinEl(el) {
       if (!el || !el.textContent.trim()) return;
-
       if (el.querySelector('.char-group')) return; // Already applied
+
+      if (!window.pinyinPro) return;
 
       const text = el.textContent.trim();
       const chars = [...text];
-      
-      if (!window.pinyinPro) {
-        return;
-      }
-      
       const { pinyin } = window.pinyinPro;
       const pyArray = pinyin(text, { toneType: 'num', type: 'array' });
 
@@ -132,7 +127,7 @@
         const py = pyArray[i] || '';
         let zy = char;
         const isChinese = /[\u4e00-\u9fa5]/.test(char);
-        
+
         if (isChinese) {
           try {
             zy = pinyinToZhuyin(py) || py;
@@ -140,13 +135,22 @@
             zy = py;
           }
         }
-        
+
         if (!isChinese || zy.trim() === char.trim() || !zy.trim()) {
           return char; // Non-chinese or punctuation
         }
         return `<span class="char-group">${char}<span class="char-zhuyin">${zy}</span></span>`;
       }).join('');
     }
+
+    function applyZhuyin(selector) {
+      applyZhuyinEl(document.querySelector(selector));
+    }
+
+    // Exposed so back.html can apply Zhuyin to its own fields
+    window.applyZhuyinAll = function(selector) {
+      document.querySelectorAll(selector).forEach(applyZhuyinEl);
+    };
 
     function init() {
       if (window.pinyinPro) {
@@ -165,6 +169,7 @@
         }
         applyZhuyin('.mainCharacter');
         applyZhuyin('.example-chinese');
+        applyZhuyin('.category-chinese');
       } else {
         setTimeout(init, 50); // wait for script to load
       }

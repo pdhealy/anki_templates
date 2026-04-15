@@ -145,10 +145,6 @@
   border-right: 2px solid #e9ecef;
 }
 
-.section-header ruby {
-  writing-mode: vertical-lr;
-  ruby-position: right;
-}
 
 .content-table td {
   padding: 12px 15px;
