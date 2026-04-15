@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "pinyin": "^4.0.0",
+    "pinyin-pro": "^3.28.1",
+    "pinyin-to-zhuyin": "^1.1.0",
+    "pinyin-zhuyin": "^1.0.4"
+  }
+}

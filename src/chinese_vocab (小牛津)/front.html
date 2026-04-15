@@ -1,27 +1,52 @@
 <!-- HTML for Front Template -->
-<div class="topic"> {{Category_Chinese}} ({{Category_Zhuyin}}) | {{Category_English}}  </div>
+<div class="header-container">
+  <div class="topic"> {{Category_Chinese}} ({{Category_Zhuyin}}) | {{Category_English}}  </div>
 
-<label class="zhuyin-toggle" title="Show/hide Zhuyin">
-  <input type="checkbox" id="zhuyinToggle" checked>
-  <span class="toggle-track"><span class="toggle-thumb"></span></span>
-</label>
+  <label class="zhuyin-toggle" title="Show/hide Zhuyin">
+    <input type="checkbox" id="zhuyinToggle" checked>
+    <span class="toggle-track"><span class="toggle-thumb"></span></span>
+  </label>
+</div>
 
 <!-- <span style="font-size: 150px; "class=mainCharacter>{{Front}}</span> -->
 <div class=mainCharacter>{{Front}}</div>
 <div class="example-chinese">{{Example_Chinese}}</div>
 <div id="zhuyinData" style="display:none">{{Back}}</div>
+<div id="exampleZhuyinData" style="display:none">{{Example_Zhuyin}}</div>
 
 <script>
   (function () {
-    const el = document.querySelector('.mainCharacter');
-    const chars = [...el.textContent.trim()];
-    const zhuyinArr = document.getElementById('zhuyinData').textContent.trim().split(' ');
-    el.innerHTML = chars.map((char, i) =>
-      `<span class="char-group">${char}<span class="char-zhuyin">${zhuyinArr[i] || ''}</span></span>`
-    ).join('');
+    function applyZhuyin(elementSelector, dataSelector) {
+      const el = document.querySelector(elementSelector);
+      const dataEl = document.getElementById(dataSelector);
+      if (!el || !dataEl || !dataEl.textContent.trim()) return;
 
-    document.getElementById('zhuyinToggle').addEventListener('change', function () {
-      document.body.classList.toggle('zhuyin-hidden', !this.checked);
-    });
+      const chars = [...el.textContent.trim()];
+      const zhuyinArr = dataEl.textContent.trim().split(String.fromCharCode(8203)); // Split by Zero-width space
+      
+      // Fallback if the user imported with space separated strings (older versions)
+      const isLegacy = zhuyinArr.length === 1 && zhuyinArr[0].includes(' ');
+      const actualZhuyinArr = isLegacy ? zhuyinArr[0].split(' ') : zhuyinArr;
+
+      el.innerHTML = chars.map((char, i) => {
+        const zy = actualZhuyinArr[i] || '';
+        const isChinese = /[\u4e00-\u9fa5]/.test(char);
+        
+        if (!isChinese || zy.trim() === char.trim() || !zy.trim()) {
+          return char; // Non-chinese or punctuation
+        }
+        return `<span class="char-group">${char}<span class="char-zhuyin">${zy}</span></span>`;
+      }).join('');
+    }
+
+    applyZhuyin('.mainCharacter', 'zhuyinData');
+    applyZhuyin('.example-chinese', 'exampleZhuyinData');
+
+    const toggle = document.getElementById('zhuyinToggle');
+    if (toggle) {
+      toggle.addEventListener('change', function () {
+        document.body.classList.toggle('zhuyin-hidden', !this.checked);
+      });
+    }
   })();
 </script>

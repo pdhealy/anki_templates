@@ -10,14 +10,22 @@
   position: relative;
 }
 
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
 /* Topic header styling */
 .topic {
     font-size: 14px;
     color: #6c757d;
     text-transform: uppercase;
     letter-spacing: 1px;
-    margin-bottom: 20px;
+    margin-bottom: 0;
     font-weight: 500;
+    text-align: left;
 }
 
 /* Main character styling */
@@ -43,7 +51,10 @@
   font-size: 0.2em;
   line-height: 1;
   letter-spacing: 0.5em;
+  margin-bottom: -0.5em; /* Compensate for trailing letter-spacing to fix vertical centering */
+  margin-left: 0.1em; /* Add slight separation from main character */
   align-self: center;
+  text-align: center;
   opacity: 1;
   transition: opacity 0.3s ease;
   text-shadow: none;
