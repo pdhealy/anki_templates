@@ -74,6 +74,17 @@
   border-radius: 4px;
 }
 
+/* Section label */
+.section-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #6c757d;
+  margin-top: 20px;
+  margin-bottom: 6px;
+}
+
 /* Divider */
 .divider {
   border: 0;
