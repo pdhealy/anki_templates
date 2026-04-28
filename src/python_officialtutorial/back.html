@@ -8,7 +8,7 @@
   <div id="code" class="code-sample"><pre>{{Code_Sample}}</pre>
   </div>
   <div class="section-label">Markdown Testing</div>
-  <div id="markdown_testing" class="explanation-box">{{Markdown_Testing}}</div>
+  <div id="markdown_testing" class="markdown-box">{{Markdown_Testing}}</div>
 </div>
 
 <script>
@@ -67,8 +67,7 @@
 		markdown("back");
 		renderMath("code");
 		markdown("code");
-		renderMath("markdown_testing");
-		markdown("markdown_testing");
+		renderMarkdownField("markdown_testing");
 		show();
 	}
 
@@ -106,6 +105,32 @@
 		text = md.render(text);
 		document.getElementById(ID).innerHTML = text.replace(/&lt;\/span&gt;/gi,"\\");
 	}
+	function renderMarkdownField(ID) {
+		var el = document.getElementById(ID);
+		if (!el) return;
+		// Use innerText with white-space:pre to correctly extract raw text from
+		// Anki HTML (handles <br>, <div> wrappers, &nbsp;, etc.) without the
+		// </div>-not-stripped bug present in replaceInString.
+		var prevWS = el.style.whiteSpace;
+		el.style.whiteSpace = "pre";
+		var raw = typeof el.innerText !== "undefined" ? el.innerText : el.textContent;
+		el.style.whiteSpace = prevWS;
+		// Normalise whitespace variants Anki may insert
+		raw = raw
+			.replace(/\r\n?/g, "\n")
+			.replace(/\u2003/g, "    ")
+			.replace(/\u2002/g, "  ")
+			.replace(/\t/g, "    ")
+			.replace(/\u00a0/g, " ");
+		var md = new markdownit({typographer: true, html: true, highlight: function(str, lang) {
+			if (lang && hljs.getLanguage(lang)) {
+				try { return hljs.highlight(str, {language: lang}).value; } catch (__) {}
+			}
+			return "";
+		}}).use(markdownItMark);
+		el.innerHTML = md.render(raw);
+	}
+
 	function replaceInString(str) {
 		str = str.replace(/<[\/]?pre[^>]*>/gi, "");
 		str = str.replace(/<br\s*[\/]?[^>]*>/gi, "\n");

@@ -74,6 +74,73 @@
   border-radius: 4px;
 }
 
+/* Markdown field */
+.markdown-box {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin: 15px 0;
+  padding: 15px;
+  background: #f8f9fa;
+  border-left: 4px solid #4299e1;
+  border-radius: 4px;
+  text-align: left;
+}
+
+.markdown-box h1, .markdown-box h2, .markdown-box h3,
+.markdown-box h4, .markdown-box h5, .markdown-box h6 {
+  color: #2a69ac;
+  margin: 0.6em 0 0.3em;
+}
+
+.markdown-box p {
+  margin: 0.4em 0;
+}
+
+.markdown-box pre {
+  background: var(--code-bg-light);
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  padding: 12px 16px;
+  overflow-x: auto;
+  margin: 10px 0;
+  font-size: 0.95rem;
+}
+
+.markdown-box pre code {
+  font-family: 'SF Mono', Menlo, Monaco, Consolas, monospace;
+  background: none;
+  padding: 0;
+}
+
+.markdown-box code {
+  font-family: 'SF Mono', Menlo, Monaco, Consolas, monospace;
+  background: #eef2f7;
+  border-radius: 3px;
+  padding: 1px 5px;
+  font-size: 0.9em;
+}
+
+@media (prefers-color-scheme: dark) {
+  .markdown-box {
+    background: #1a202c;
+    border-left-color: #4299e1;
+  }
+
+  .markdown-box h1, .markdown-box h2, .markdown-box h3,
+  .markdown-box h4, .markdown-box h5, .markdown-box h6 {
+    color: #63b3ed;
+  }
+
+  .markdown-box pre {
+    background: var(--code-bg-dark);
+    border-color: var(--border-dark);
+  }
+
+  .markdown-box code {
+    background: #2d3748;
+  }
+}
+
 /* Section label */
 .section-label {
   font-size: 0.85rem;
