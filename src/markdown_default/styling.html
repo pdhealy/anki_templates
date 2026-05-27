@@ -14,31 +14,3 @@
     border-radius: 4px;
     font-size: 0.85em;
 }
-
-#front pre code,
-#back pre code {
-    display: block;
-}
-
-#front pre code.line-numbered,
-#back pre code.line-numbered {
-    counter-reset: line;
-}
-
-#front pre code.line-numbered .code-line,
-#back pre code.line-numbered .code-line {
-    display: block;
-    padding-left: 3em;
-    position: relative;
-}
-
-#front pre code.line-numbered .code-line::before,
-#back pre code.line-numbered .code-line::before {
-    counter-increment: line;
-    content: counter(line);
-    position: absolute;
-    left: 0;
-    width: 2.5em;
-    text-align: right;
-    color: rgba(0, 0, 0, 0.45);
-}
