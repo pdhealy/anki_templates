@@ -51,6 +51,27 @@
 
   function render() {
     renderMarkdownField("back");
+    addLineNumbers(document.getElementById("back"));
+  }
+
+  function addLineNumbers(container) {
+    if (!container) return;
+    container.querySelectorAll("pre > code").forEach(function (code) {
+      var lines = code.innerHTML.split("\n");
+      if (lines.length && lines[lines.length - 1] === "") lines.pop();
+      var html = '<div class="code-lines">';
+      lines.forEach(function (line, idx) {
+        html += '<div class="code-line">';
+        html += '<span class="line-num">' + (idx + 1) + "</span>";
+        html += '<span class="line-code">' + line + "</span>";
+        html += "</div>";
+      });
+      html += "</div>";
+      var wrapper = document.createElement("div");
+      wrapper.className = "code-block";
+      wrapper.innerHTML = html;
+      code.parentNode.parentNode.replaceChild(wrapper, code.parentNode);
+    });
   }
 
   function renderMarkdownField(ID) {
