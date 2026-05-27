@@ -56,16 +56,26 @@
   function renderMarkdownField(ID) {
     var el = document.getElementById(ID);
     if (!el) return;
-    var prevWS = el.style.whiteSpace;
-    el.style.whiteSpace = "pre";
-    var raw = typeof el.innerText !== "undefined" ? el.innerText : el.textContent;
-    el.style.whiteSpace = prevWS;
-    raw = raw
+    var raw = el.innerHTML
       .replace(/\r\n?/g, "\n")
-      .replace(/ /g, "    ")
-      .replace(/ /g, "  ")
+      .replace(/<div[^>]*>/gi, "\n")
+      .replace(/<\/div>/gi, "")
+      .replace(/<p[^>]*>/gi, "\n")
+      .replace(/<\/p>/gi, "")
+      .replace(/<br\s*\/?>/gi, "\n")
+      .replace(/<[^>]*>/g, "")
+      .replace(/&nbsp;/g, " ")
+      .replace(/&emsp;/g, "    ")
+      .replace(/&ensp;/g, "  ")
+      .replace(/&amp;/g, "&")
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/&quot;/g, '"')
+      .replace(/\u2003/g, "    ")
+      .replace(/\u2002/g, "  ")
       .replace(/\t/g, "    ")
-      .replace(/ /g, " ");
+      .replace(/\u00a0/g, " ")
+      .replace(/^\n+/, "");
     var md = new markdownit({ typographer: true, html: true, highlight: function (str, lang) {
       if (lang && hljs.getLanguage(lang)) {
         try { return hljs.highlight(str, { language: lang }).value; } catch (__) {}
