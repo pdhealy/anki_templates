@@ -56,7 +56,16 @@
   function renderMarkdownField(ID) {
     var el = document.getElementById(ID);
     if (!el) return;
-    var raw = normalizeMarkdownSource(el);
+    var prevWS = el.style.whiteSpace;
+    el.style.whiteSpace = "pre";
+    var raw = typeof el.innerText !== "undefined" ? el.innerText : el.textContent;
+    el.style.whiteSpace = prevWS;
+    raw = raw
+      .replace(/\r\n?/g, "\n")
+      .replace(/ /g, "    ")
+      .replace(/ /g, "  ")
+      .replace(/\t/g, "    ")
+      .replace(/ /g, " ");
     var md = new markdownit({ typographer: true, html: true, highlight: function (str, lang) {
       if (lang && hljs.getLanguage(lang)) {
         try { return hljs.highlight(str, { language: lang }).value; } catch (__) {}
@@ -64,25 +73,6 @@
       return "";
     }}).use(markdownItMark);
     el.innerHTML = md.render(raw);
-  }
-
-  function normalizeMarkdownSource(el) {
-    var raw = el.innerHTML;
-    raw = raw
-      .replace(/<br\s*\/?>/gi, "\n")
-      .replace(/<\/div>\s*<div>/gi, "\n")
-      .replace(/^<div>/i, "")
-      .replace(/<\/div>$/i, "");
-    return raw
-      .replace(/\r\n?/g, "\n")
-      .replace(/&nbsp;/gi, " ")
-      .replace(/&#160;/gi, " ")
-      .replace(/&ensp;/gi, "  ")
-      .replace(/&emsp;/gi, "    ")
-      .replace(/ /g, "    ")
-      .replace(/ /g, "  ")
-      .replace(/\t/g, "    ")
-      .replace(/ /g, " ");
   }
 })();
 </script>
