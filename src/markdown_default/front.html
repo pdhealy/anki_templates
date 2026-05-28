@@ -82,6 +82,40 @@
     });
   }
 
+  function normalizeListIndent(raw) {
+    var lines = raw.split("\n");
+    var out = [];
+    var inFence = false;
+    var fenceChar = "";
+    var prevNonEmpty = "";
+    lines.forEach(function (line) {
+      var fenceMatch = line.match(/^\s*(```+|~~~+)/);
+      if (fenceMatch) {
+        var marker = fenceMatch[1][0];
+        if (!inFence) {
+          inFence = true;
+          fenceChar = marker;
+        } else if (marker === fenceChar) {
+          inFence = false;
+          fenceChar = "";
+        }
+        out.push(line);
+        if (line.trim() !== "") prevNonEmpty = line;
+        return;
+      }
+
+      if (!inFence && /^\s{4,}[-*+]\s+/.test(line)) {
+        if (!/^\s*(?:[-*+]|\d+\.)\s+/.test(prevNonEmpty)) {
+          line = line.replace(/^\s+([-*+]\s+)/, "$1");
+        }
+      }
+
+      out.push(line);
+      if (line.trim() !== "") prevNonEmpty = line;
+    });
+    return out.join("\n");
+  }
+
   function renderMarkdownField(ID) {
     var el = document.getElementById(ID);
     if (!el) return;
@@ -91,10 +125,11 @@
     el.style.whiteSpace = prevWS;
     raw = raw
       .replace(/\r\n?/g, "\n")
-      .replace(/ /g, "    ")
-      .replace(/ /g, "  ")
+      .replace(/\u2003/g, "    ")
+      .replace(/\u2002/g, "  ")
       .replace(/\t/g, "    ")
-      .replace(/ /g, " ");
+      .replace(/\u00a0/g, " ");
+    raw = normalizeListIndent(raw);
     var md = new markdownit({ typographer: true, html: true, highlight: function (str, lang) {
       if (lang && hljs.getLanguage(lang)) {
         try { return hljs.highlight(str, { language: lang }).value; } catch (__) {}
