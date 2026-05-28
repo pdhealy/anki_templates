@@ -70,3 +70,50 @@
     overflow-wrap: anywhere;
     vertical-align: top;
 }
+
+/* ── Anki built-in night mode ── */
+.nightMode body,
+.nightMode #qa {
+    background-color: #1e2028;
+}
+
+.nightMode .card {
+    background-color: #1e2028;
+    color: #b6beca;
+}
+
+.nightMode #header {
+    color: #dce1ea;
+    background: #2a2f3a;
+    border-color: #3a3e4a;
+}
+
+.nightMode #front code,
+.nightMode #back code {
+    background: rgba(255, 255, 255, 0.1);
+    color: #dce1ea;
+}
+
+.nightMode .code-block {
+    background: #1a1d27;
+    border-color: #3a3e4a;
+}
+
+.nightMode .line-num {
+    color: #6b7280;
+    background: rgba(0, 0, 0, 0.25);
+    border-color: #3a3e4a;
+}
+
+.nightMode .line-code {
+    color: #dce1ea;
+}
+
+.nightMode .code-block .hljs {
+    color: #dce1ea;
+    background: transparent;
+}
+
+.nightMode .code-block .hljs * {
+    color: inherit;
+}
