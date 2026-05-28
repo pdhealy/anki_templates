@@ -66,10 +66,11 @@
     container.querySelectorAll("pre > code").forEach(function (code) {
       var lines = code.innerHTML.split("\n");
       if (lines.length && lines[lines.length - 1] === "") lines.pop();
+      var numWidth = String(lines.length).length + "ch";
       var html = '<div class="code-lines">';
       lines.forEach(function (line, idx) {
         html += '<div class="code-line">';
-        html += '<span class="line-num">' + (idx + 1) + "</span>";
+        html += '<span class="line-num" style="width:' + numWidth + '">' + (idx + 1) + "</span>";
         html += '<span class="line-code">' + line + "</span>";
         html += "</div>";
       });
