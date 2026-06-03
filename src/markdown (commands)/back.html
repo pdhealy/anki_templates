@@ -1,0 +1,149 @@
+{{FrontSide}}
+
+<hr id=answer>
+
+<style>
+  #label { font-weight: bold; }
+</style>
+
+<div id="back">{{Back}}</div>
+
+<div id="label">Usage Example</div>
+<div id="usage">{{Usage}}</div>
+
+<div id="label">Output Example</div>
+<div id="output">{{Output}}</div>
+
+<script>
+(function () {
+  function getScript(path, altURL) {
+    return new Promise(function (resolve, reject) {
+      var script = document.createElement("script");
+      script.onload = resolve;
+      script.onerror = function () {
+        var s = document.createElement("script");
+        s.onload = resolve;
+        s.onerror = reject;
+        s.src = altURL;
+        document.head.appendChild(s);
+      };
+      script.src = path;
+      document.head.appendChild(script);
+    });
+  }
+
+  function getCSS(path, altURL) {
+    return new Promise(function (resolve, reject) {
+      var css = document.createElement("link");
+      css.setAttribute("rel", "stylesheet");
+      css.type = "text/css";
+      css.onload = resolve;
+      css.onerror = function () {
+        var c = document.createElement("link");
+        c.setAttribute("rel", "stylesheet");
+        c.type = "text/css";
+        c.onload = resolve;
+        c.onerror = reject;
+        c.href = altURL;
+        document.head.appendChild(c);
+      };
+      css.href = path;
+      document.head.appendChild(css);
+    });
+  }
+
+  Promise.all([
+    getCSS("_highlight.css", "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/styles/github.min.css"),
+    getScript("_highlight.js", "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/highlight.min.js"),
+    getScript("_markdown-it.min.js", "https://cdnjs.cloudflare.com/ajax/libs/markdown-it/12.0.4/markdown-it.min.js"),
+    getScript("_markdown-it-mark.js", "https://cdn.jsdelivr.net/gh/Jwrede/Anki-KaTeX-Markdown/_markdown-it-mark.js")
+  ]).then(render).catch(function () {});
+
+  function render() {
+    renderMarkdownField("back");
+    addLineNumbers(document.getElementById("back"));
+    renderMarkdownField("usage");
+    addLineNumbers(document.getElementById("usage"));
+    renderMarkdownField("output");
+    addLineNumbers(document.getElementById("output"));
+  }
+
+  function addLineNumbers(container) {
+    if (!container) return;
+    container.querySelectorAll("pre > code").forEach(function (code) {
+      var lines = code.innerHTML.split("\n");
+      if (lines.length && lines[lines.length - 1] === "") lines.pop();
+      var numWidth = String(lines.length).length + "ch";
+      var html = '<div class="code-lines">';
+      lines.forEach(function (line, idx) {
+        html += '<div class="code-line">';
+        html += '<span class="line-num" style="width:' + numWidth + '">' + (idx + 1) + "</span>";
+        html += '<span class="line-code">' + line + "</span>";
+        html += "</div>";
+      });
+      html += "</div>";
+      var wrapper = document.createElement("div");
+      wrapper.className = "code-block";
+      wrapper.innerHTML = html;
+      code.parentNode.parentNode.replaceChild(wrapper, code.parentNode);
+    });
+  }
+
+  function normalizeListIndent(raw) {
+    var lines = raw.split("\n");
+    var out = [];
+    var inFence = false;
+    var fenceChar = "";
+    var prevNonEmpty = "";
+    lines.forEach(function (line) {
+      var fenceMatch = line.match(/^\s*(```+|~~~+)/);
+      if (fenceMatch) {
+        var marker = fenceMatch[1][0];
+        if (!inFence) {
+          inFence = true;
+          fenceChar = marker;
+        } else if (marker === fenceChar) {
+          inFence = false;
+          fenceChar = "";
+        }
+        out.push(line);
+        if (line.trim() !== "") prevNonEmpty = line;
+        return;
+      }
+
+      if (!inFence && /^\s{4,}[-*+]\s+/.test(line)) {
+        if (!/^\s*(?:[-*+]|\d+\.)\s+/.test(prevNonEmpty)) {
+          line = line.replace(/^\s+([-*+]\s+)/, "$1");
+        }
+      }
+
+      out.push(line);
+      if (line.trim() !== "") prevNonEmpty = line;
+    });
+    return out.join("\n");
+  }
+
+  function renderMarkdownField(ID) {
+    var el = document.getElementById(ID);
+    if (!el) return;
+    var prevWS = el.style.whiteSpace;
+    el.style.whiteSpace = "pre";
+    var raw = typeof el.innerText !== "undefined" ? el.innerText : el.textContent;
+    el.style.whiteSpace = prevWS;
+    raw = raw
+      .replace(/\r\n?/g, "\n")
+      .replace(/\u2003/g, "    ")
+      .replace(/\u2002/g, "  ")
+      .replace(/\t/g, "    ")
+      .replace(/\u00a0/g, " ");
+    raw = normalizeListIndent(raw);
+    var md = new markdownit({ typographer: true, html: true, highlight: function (str, lang) {
+      if (lang && hljs.getLanguage(lang)) {
+        try { return hljs.highlight(str, { language: lang }).value; } catch (__) {}
+      }
+      return "";
+    }}).use(markdownItMark);
+    el.innerHTML = md.render(raw);
+  }
+})();
+</script>
