@@ -4,10 +4,10 @@
 
 <div id="back">{{Back}}</div>
 
-<div id="label">Usage Example</div>
+<div id="usage-label" class="label">Usage Example</div>
 <div id="usage">{{Usage}}</div>
 
-<div id="label">Output Example</div>
+<div id="output-label" class="label">Output Example</div>
 <div id="output">{{Output}}</div>
 
 <script>
@@ -58,10 +58,36 @@
   function render() {
     renderMarkdownField("back");
     addLineNumbers(document.getElementById("back"));
-    renderMarkdownField("usage");
-    addLineNumbers(document.getElementById("usage"));
-    renderMarkdownField("output");
-    addLineNumbers(document.getElementById("output"));
+
+    if (prepareSection("usage-label", "usage")) {
+      renderMarkdownField("usage");
+      addLineNumbers(document.getElementById("usage"));
+    }
+
+    if (prepareSection("output-label", "output")) {
+      renderMarkdownField("output");
+      addLineNumbers(document.getElementById("output"));
+    }
+  }
+
+  function prepareSection(labelId, contentId) {
+    var content = document.getElementById(contentId);
+    var label = document.getElementById(labelId);
+    if (!content) return false;
+
+    var prevWS = content.style.whiteSpace;
+    content.style.whiteSpace = "pre";
+    var raw = typeof content.innerText !== "undefined" ? content.innerText : content.textContent;
+    content.style.whiteSpace = prevWS;
+
+    var isBlank = !raw || raw.replace(/\u00a0/g, " ").trim() === "";
+    if (isBlank) {
+      if (label) label.style.display = "none";
+      content.style.display = "none";
+      return false;
+    }
+
+    return true;
   }
 
   function addLineNumbers(container) {
