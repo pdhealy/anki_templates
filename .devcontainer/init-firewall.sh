@@ -128,6 +128,25 @@ echo "Host network detected as: $HOST_NETWORK"
 iptables -A INPUT -s "$HOST_NETWORK" -j ACCEPT
 iptables -A OUTPUT -d "$HOST_NETWORK" -j ACCEPT
 
+# Allow outbound traffic to host.docker.internal (for MCP servers and other host services)
+echo "Resolving host.docker.internal..."
+DOCKER_HOST_IPS=$(getent ahosts host.docker.internal 2>/dev/null | awk '{print $1}' | sort -u)
+if [ -n "$DOCKER_HOST_IPS" ]; then
+    while IFS= read -r host_ip; do
+        if [[ "$host_ip" =~ : ]]; then
+            ip6tables -A OUTPUT -d "$host_ip" -j ACCEPT 2>/dev/null \
+                && echo "Allowed host.docker.internal IPv6: $host_ip" \
+                || echo "WARNING: ip6tables unavailable, skipped $host_ip"
+        else
+            iptables -A INPUT -s "$host_ip" -j ACCEPT
+            iptables -A OUTPUT -d "$host_ip" -j ACCEPT
+            echo "Allowed host.docker.internal IPv4: $host_ip"
+        fi
+    done <<< "$DOCKER_HOST_IPS"
+else
+    echo "WARNING: Could not resolve host.docker.internal — host MCP servers will be unreachable"
+fi
+
 # Set default policies to DROP first
 iptables -P INPUT DROP
 iptables -P FORWARD DROP
