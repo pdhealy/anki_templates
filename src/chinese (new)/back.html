@@ -5,7 +5,7 @@
 <table class="content-table">
   <tr>
     <th class="section-header">注音</th>
-    <td class="zhuyin">{{Back}}</td>
+    <td class="zhuyin">{{Front}}</td>
   </tr>
   <tr>
     <th class="section-header">漢字</th>
@@ -28,10 +28,11 @@
 <script>
 (function () {
   function initBack() {
-    if (!window.applyZhuyinAll || !window.pinyinPro) {
+    if (!window.applyZhuyin || !window.applyZhuyinAll || !window.pinyinPro) {
       setTimeout(initBack, 50);
       return;
     }
+    window.applyZhuyin('.zhuyin');
     window.applyZhuyinAll('.chinese');
     window.applyZhuyinAll('.desc-chinese');
     window.applyZhuyinAll('th.section-header');

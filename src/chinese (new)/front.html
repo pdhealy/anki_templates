@@ -146,6 +146,7 @@
       applyZhuyinEl(document.querySelector(selector));
     }
 
+    window.applyZhuyin = applyZhuyin;
     // Exposed so back.html can apply Zhuyin to its own fields
     window.applyZhuyinAll = function(selector) {
       document.querySelectorAll(selector).forEach(applyZhuyinEl);
