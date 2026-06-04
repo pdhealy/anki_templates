@@ -8,10 +8,6 @@
     <td class="zhuyin">{{Back}}</td>
   </tr>
   <tr>
-    <th class="section-header">漢字</th>
-    <td class="chinese">{{Front}}</td>
-  </tr>
-  <tr>
     <th class="section-header">英文</th>
     <td class="english">{{English}}</td>
   </tr>
@@ -25,6 +21,7 @@
   </tr>
 </table>
 
+<span id="front-source" hidden>{{Front}}</span>
 <script src="https://unpkg.com/pinyin-pro@3.28.1"></script>
 <script>
 (function () {
@@ -144,13 +141,12 @@
       return;
     }
     const zhuyinCell = document.querySelector('.zhuyin');
-    const chineseCell = document.querySelector('.chinese');
-    if (zhuyinCell && chineseCell) {
-      zhuyinCell.textContent = chineseCell.textContent.trim();
+    const frontSource = document.getElementById('front-source');
+    if (zhuyinCell && frontSource) {
+      zhuyinCell.textContent = frontSource.textContent.trim();
     }
     window.applyZhuyin('.zhuyin');
     if (window.applyZhuyinAll) {
-      window.applyZhuyinAll('.chinese');
       window.applyZhuyinAll('.desc-chinese');
       window.applyZhuyinAll('th.section-header');
     }
