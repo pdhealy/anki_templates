@@ -120,6 +120,7 @@
       const chars = [...text];
       const { pinyin } = window.pinyinPro;
       const pyArray = pinyin(text, { toneType: 'num', type: 'array' });
+      const zhuyinOnly = el.classList.contains('zhuyin');
 
       el.innerHTML = chars.map((char, i) => {
         const py = pyArray[i] || '';
@@ -137,6 +138,7 @@
         if (!isChinese || zy.trim() === char.trim() || !zy.trim()) {
           return char; // Non-chinese or punctuation
         }
+        if (zhuyinOnly) return zy;
         const zyChars = [...zy].map(c => `<span>${c}</span>`).join('');
         return `<span class="char-group">${char}<span class="char-zhuyin">${zyChars}</span></span>`;
       }).join('');
