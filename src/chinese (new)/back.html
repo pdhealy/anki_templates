@@ -25,10 +25,121 @@
   </tr>
 </table>
 
+<script src="https://unpkg.com/pinyin-pro@3.28.1"></script>
 <script>
 (function () {
+  function ensureApplyZhuyin() {
+    if (window.applyZhuyin) return true;
+    if (!window.pinyinPro) return false;
+
+    const toneMap = { ā: 'a1', á: 'a2', ǎ: 'a3', à: 'a4', ē: 'e1', é: 'e2', ě: 'e3', è: 'e4', ī: 'i1', í: 'i2', ǐ: 'i3', ì: 'i4', ō: 'o1', ó: 'o2', ǒ: 'o3', ò: 'o4', ū: 'u1', ú: 'u2', ǔ: 'u3', ù: 'u4', ǖ: 'ü1', ǘ: 'ü2', ǚ: 'ü3', ǜ: 'ü4' };
+    const toneNumberToSymbol = { 0: '˙', 1: '', 2: 'ˊ', 3: 'ˇ', 4: 'ˋ', 5: '˙' };
+    const initials = { b: 'ㄅ', p: 'ㄆ', m: 'ㄇ', f: 'ㄈ', d: 'ㄉ', t: 'ㄊ', n: 'ㄋ', l: 'ㄌ', g: 'ㄍ', k: 'ㄎ', h: 'ㄏ', j: 'ㄐ', q: 'ㄑ', x: 'ㄒ', zh: 'ㄓ', ch: 'ㄔ', sh: 'ㄕ', r: 'ㄖ', z: 'ㄗ', c: 'ㄘ', s: 'ㄙ' };
+    const finals = { a: 'ㄚ', o: 'ㄛ', e: 'ㄜ', ai: 'ㄞ', ei: 'ㄟ', ao: 'ㄠ', ou: 'ㄡ', an: 'ㄢ', ang: 'ㄤ', en: 'ㄣ', eng: 'ㄥ', er: 'ㄦ', u: 'ㄨ', ua: 'ㄨㄚ', uo: 'ㄨㄛ', uai: 'ㄨㄞ', ui: 'ㄨㄟ', uan: 'ㄨㄢ', uang: 'ㄨㄤ', un: 'ㄨㄣ', ueng: 'ㄨㄥ', ong: 'ㄨㄥ', i: 'ㄧ', ia: 'ㄧㄚ', ie: 'ㄧㄝ', iao: 'ㄧㄠ', iu: 'ㄧㄡ', ian: 'ㄧㄢ', iang: 'ㄧㄤ', in: 'ㄧㄣ', ing: 'ㄧㄥ', ü: 'ㄩ', üe: 'ㄩㄝ', ue: 'ㄩㄝ', üan: 'ㄩㄢ', ün: 'ㄩㄣ', iong: 'ㄩㄥ' };
+    const individuals = { zhi: 'ㄓ', chi: 'ㄔ', shi: 'ㄕ', ri: 'ㄖ', zi: 'ㄗ', ci: 'ㄘ', si: 'ㄙ', a: 'ㄚ', o: 'ㄛ', e: 'ㄜ', ai: 'ㄞ', ei: 'ㄟ', ao: 'ㄠ', ou: 'ㄡ', an: 'ㄢ', ang: 'ㄤ', en: 'ㄣ', eng: 'ㄥ', er: 'ㄦ', r: 'ㄦ', wu: 'ㄨ', wa: 'ㄨㄚ', wo: 'ㄨㄛ', wai: 'ㄨㄞ', wei: 'ㄨㄟ', wan: 'ㄨㄢ', wang: 'ㄨㄤ', wen: 'ㄨㄣ', weng: 'ㄨㄥ', yi: 'ㄧ', ya: 'ㄧㄚ', ye: 'ㄧㄝ', yao: 'ㄧㄠ', you: 'ㄧㄡ', yan: 'ㄧㄢ', yang: 'ㄧㄤ', yin: 'ㄧㄣ', ying: 'ㄧㄥ', yu: 'ㄩ', yue: 'ㄩㄝ', yuan: 'ㄩㄢ', yun: 'ㄩㄣ', yong: 'ㄩㄥ' };
+    const getKeys = function (obj) { return Object.keys(obj); };
+    const lenComp = function (a, b) { return a.length === b.length ? 0 : (a.length < b.length ? 1 : -1); };
+    const individualRexp = new RegExp('^(' + getKeys(individuals).sort(lenComp).join('|') + ')(\\d)?', 'i');
+    const initialFinalRexp = new RegExp('^(' + getKeys(initials).sort(lenComp).join('|') + ')(' + getKeys(finals).sort(lenComp).join('|') + ')(\\d)?', 'i');
+
+    function findAccentedChars(text) {
+      const accentsFound = {};
+      for (let i = 0; i < text.length; i++) {
+        for (const accentedChar in toneMap) {
+          if (text[i].toLowerCase() === accentedChar) {
+            accentsFound[i] = toneMap[accentedChar];
+          }
+        }
+      }
+      return accentsFound;
+    }
+
+    function removeAccents(accentedChars, text) {
+      let output = '';
+      for (let i = 0; i < text.length; i++) {
+        output += i in accentedChars ? accentedChars[i][0] : text[i];
+      }
+      return output;
+    }
+
+    function findBetween(list, min, max) {
+      for (let i = 0; i < list.length; i++) {
+        if (list[i] > max) break;
+        if (list[i] >= min) return list[i];
+      }
+      return -1;
+    }
+
+    if (!window.pinyinToZhuyin) {
+      window.pinyinToZhuyin = function (pinyinText) {
+        if (!pinyinText) return pinyinText;
+        const accentedChars = findAccentedChars(pinyinText);
+        const sortedAccentedIndices = getKeys(accentedChars).map(function (x) { return parseInt(x, 10); });
+        const text = removeAccents(accentedChars, pinyinText);
+        const tokens = [];
+        let i = 0;
+
+        while (i < text.length) {
+          let parse = text.slice(i).match(initialFinalRexp);
+          let token;
+          let detectedToneIdx;
+
+          if (parse) {
+            parse = parse.map(function (x) { return x ? x.toLowerCase() : x; });
+            token = { parse: parse, type: 'pinyin', zhuyin: initials[parse[1]] + finals[parse[2]] };
+            token.tone = typeof parse[3] !== 'undefined' ? parseInt(parse[3], 10) : 5;
+            if (typeof parse[3] === 'undefined') {
+              detectedToneIdx = findBetween(sortedAccentedIndices, i, i + parse[0].length);
+              token.tone = detectedToneIdx >= 0 ? +accentedChars[detectedToneIdx][1] : 5;
+            }
+          } else {
+            parse = text.slice(i).match(individualRexp);
+            if (parse) {
+              parse = parse.map(function (x) { return x ? x.toLowerCase() : x; });
+              token = { parse: parse, type: 'pinyin', zhuyin: individuals[parse[1]] };
+              token.tone = typeof parse[2] !== 'undefined' ? parseInt(parse[2], 10) : 5;
+              if (typeof parse[2] === 'undefined') {
+                detectedToneIdx = findBetween(sortedAccentedIndices, i, i + parse[0].length);
+                token.tone = detectedToneIdx >= 0 ? +accentedChars[detectedToneIdx][1] : 5;
+              }
+            } else {
+              token = { parse: [text[i]], type: 'other' };
+            }
+          }
+
+          tokens.push(token);
+          i += token.parse[0].length;
+        }
+
+        return tokens.map(function (token) {
+          if (token.type === 'other') return token.parse.join('');
+          return token.zhuyin + toneNumberToSymbol[token.tone];
+        }).join('')
+          .replace(/ㄐㄨ/g, 'ㄐㄩ').replace(/ㄑㄨ/g, 'ㄑㄩ').replace(/ㄒㄨ/g, 'ㄒㄩ')
+          .replace(/ㄓㄧ/g, 'ㄓ').replace(/ㄔㄧ/g, 'ㄔ').replace(/ㄕㄧ/g, 'ㄕ').replace(/ㄖㄧ/g, 'ㄖ')
+          .replace(/ㄗㄧ/g, 'ㄗ').replace(/ㄘㄧ/g, 'ㄘ').replace(/ㄙㄧ/g, 'ㄙ')
+          .replace(/\u200b'/g, '');
+      };
+    }
+
+    window.applyZhuyin = function (selector) {
+      const el = document.querySelector(selector);
+      if (!el || !el.textContent.trim()) return;
+      const text = el.textContent.trim();
+      const chars = [...text];
+      const pyArray = window.pinyinPro.pinyin(text, { toneType: 'num', type: 'array' });
+      el.textContent = chars.map(function (char, i) {
+        if (!/[\u4e00-\u9fa5]/.test(char)) return char;
+        const py = pyArray[i] || '';
+        return window.pinyinToZhuyin(py) || char;
+      }).join('');
+    };
+
+    return true;
+  }
+
   function initBack() {
-    if (!window.applyZhuyin || !window.applyZhuyinAll || !window.pinyinPro) {
+    if (!window.pinyinPro || !ensureApplyZhuyin()) {
       setTimeout(initBack, 50);
       return;
     }
@@ -38,9 +149,11 @@
       zhuyinCell.textContent = chineseCell.textContent.trim();
     }
     window.applyZhuyin('.zhuyin');
-    window.applyZhuyinAll('.chinese');
-    window.applyZhuyinAll('.desc-chinese');
-    window.applyZhuyinAll('th.section-header');
+    if (window.applyZhuyinAll) {
+      window.applyZhuyinAll('.chinese');
+      window.applyZhuyinAll('.desc-chinese');
+      window.applyZhuyinAll('th.section-header');
+    }
   }
   initBack();
 })();
