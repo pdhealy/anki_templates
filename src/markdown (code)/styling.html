@@ -1,0 +1,119 @@
+.card {
+    font-family: "JetBrains Mono", "Fira Code", "Menlo", monospace;
+    font-size: 20px;
+    line-height: 1.5;
+    text-align: left;
+    color: black;
+    background-color: white;
+}
+
+#header {
+    font-size: 0.6em;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #5b6470;
+    background: #f3f5f8;
+    border: 1px solid #e3e7ee;
+    border-radius: 6px;
+    padding: 0.35em 0.6em;
+    margin-bottom: 0.8em;
+    display: inline-block;
+}
+
+#front code,
+#back code {
+    background: rgba(0, 0, 0, 0.08);
+    padding: 0.1em 0.35em;
+    border-radius: 4px;
+    font-size: 0.85em;
+}
+
+/* ── Code blocks with line numbers ── */
+.code-block {
+    background: #f8fafc;
+    border-radius: 6px;
+    overflow-x: hidden;
+    margin: 0.75rem 0;
+    border: 1px solid #d8d8d8;
+    font-family: "JetBrains Mono", "Fira Code", "Menlo", monospace;
+    font-size: 0.9em;
+}
+
+.code-lines {
+    display: table;
+    width: 100%;
+    table-layout: auto;
+    padding: 0.4rem 0;
+}
+
+.code-line {
+    display: table-row;
+}
+
+.line-num {
+    display: table-cell;
+    color: #9a9ea8;
+    text-align: left;
+    padding: 0.15em 0.15em 0.15em 0.5em;
+    user-select: none;
+    white-space: nowrap;
+    vertical-align: top;
+    background: rgba(0, 0, 0, 0.025);
+    border-right: 1px solid #d8d8d8;
+}
+
+.line-code {
+    display: table-cell;
+    padding: 0.15em 1em;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    vertical-align: top;
+}
+
+/* ── Anki built-in night mode ── */
+.nightMode body,
+.nightMode #qa {
+    background-color: #1e2028;
+}
+
+.nightMode .card {
+    background-color: #1e2028;
+    color: #b6beca;
+}
+
+.nightMode #header {
+    color: #dce1ea;
+    background: #2a2f3a;
+    border-color: #3a3e4a;
+}
+
+.nightMode #front code,
+.nightMode #back code {
+    background: rgba(255, 255, 255, 0.1);
+    color: #dce1ea;
+}
+
+.nightMode .code-block {
+    background: #1a1d27;
+    border-color: #3a3e4a;
+}
+
+.nightMode .line-num {
+    color: #6b7280;
+    background: rgba(0, 0, 0, 0.25);
+    border-color: #3a3e4a;
+}
+
+.nightMode .line-code {
+    color: #dce1ea;
+}
+
+.nightMode .code-block .hljs {
+    color: #dce1ea;
+    background: transparent;
+}
+
+.nightMode .code-block .hljs * {
+    color: inherit;
+}
