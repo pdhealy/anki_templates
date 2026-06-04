@@ -1,0 +1,241 @@
+.card {
+  font-family: "Microsoft YaHei", "PingFang SC", arial, sans-serif;
+  font-size: 18px;
+  line-height: 1.6;desc-english
+  color: #333333;
+  background-color: #f8f9fa;
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Topic header styling */
+.topic {
+    font-size: 14px;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0;
+    font-weight: 500;
+    text-align: left;
+}
+
+/* Main character styling */
+.mainCharacter {
+  writing-mode: horizontal-tb;
+  font-size: 14rem;
+  line-height: 1.5;
+  display: inline-flex;
+  align-items: center;
+  margin: 20px 0;
+  color: #1a1a1a; /* Dark charcoal for light mode */
+  text-shadow: 2px 2px 3px rgba(0,0,0,0.2);
+}
+
+.char-group {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: flex-start;
+  line-height: 1;
+}
+
+.char-zhuyin {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  align-self: stretch;
+  font-size: 0.2em;
+  line-height: 1;
+  margin-left: 0.1em;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  text-shadow: none;
+}
+
+.zhuyin-hidden .char-zhuyin {
+  opacity: 0;
+}
+
+/* Zhuyin toggle switch */
+.zhuyin-toggle {
+  cursor: pointer;
+  flex-shrink: 0;
+  /* Reset button defaults */
+  border: none;
+  background: transparent;
+  padding: 0;
+}
+
+.toggle-track {
+  display: block;
+  width: 58px;
+  height: 26px;
+  background: #ccc;
+  border-radius: 13px;
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+.zhuyin-toggle.is-on .toggle-track {
+  background: #4299e1;
+}
+
+.toggle-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+  transition: transform 0.3s ease;
+}
+
+.zhuyin-toggle.is-on .toggle-thumb {
+  transform: translateX(32px);
+}
+
+/* Explanation styling */
+.example-chinese {
+  font-size: 2rem;
+  margin: 15px 0;
+  text-align: left;
+  padding: 15px;
+  background: #f8f9fa;
+  border-left: 4px solid #4299e1;
+  border-radius: 4px;
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .mainCharacter {
+    color: #f0f0f0; /* Light gray for dark mode */
+    text-shadow: 2px 2px 3px rgba(0,0,0,0.4);
+  }
+}
+
+/* Table styling */
+.content-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 20px 0;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  font-size: 2.5rem;
+}
+
+/* Zhuyin annotations inside the table — larger ratio so they're readable at 2.5rem */
+.content-table .char-zhuyin {
+  font-size: 0.3em;
+}
+
+/* Table headers and cells */
+.section-header {
+  width: 1px;
+  white-space: nowrap;
+  padding: 12px 15px;
+  text-align: left;
+  background-color: #f1f3f5;
+  color: #495057;
+  font-weight: bold;
+  border-right: 2px solid #e9ecef;
+}
+
+
+.content-table td,
+.content-table th {
+  padding: 12px 15px;
+  writing-mode: horizontal-tb;
+}
+
+.content-table td {
+  text-align: left;
+}
+
+/* Alternating row colors */
+.content-table tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+/* Specific section styling */
+.zhuyin {
+  color: #1a73e8;
+}
+
+.example-chinese {
+  font-size: 3.7rem;
+  color: #2c3e50;
+}
+
+.chinese {
+  color: #2c3e50;
+}
+
+.english {
+  color: #2c3e50;
+}
+
+.description {
+  padding: 15px;
+}
+
+.desc-chinese {
+  margin-bottom: 8px;
+  color: #2c3e50;
+}
+
+.desc-zhuyin {
+  margin-bottom: 8px;
+  color: #1a73e8;
+}
+
+.desc-english {
+  color: #495057;
+}
+
+/* Divider styling */
+#answer {
+  border: 0;
+  height: 1px;
+  background: #dee2e6;
+  margin: 20px 0;
+}
+
+/* Hover effects */
+.content-table tr:hover {
+  background-color: #f1f3f5;
+  transition: background-color 0.2s ease;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  .card {
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  .mainCharacter {
+    font-size: 14rem;
+  }
+  
+  .section-header {
+    width: 80px;
+    padding: 8px 10px;
+  }
+  
+  .content-table td {
+    padding: 8px 10px;
+  }
+}
