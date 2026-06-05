@@ -40,6 +40,25 @@
   text-shadow: 2px 2px 3px rgba(0,0,0,0.2);
 }
 
+.front-main-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.tts-buttons-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.tts-buttons-right > div {
+  line-height: 1;
+}
+
 .char-group {
   display: inline-flex;
   flex-direction: row;
