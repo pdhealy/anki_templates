@@ -31,7 +31,7 @@
 /* Main character styling */
 .mainCharacter {
   writing-mode: horizontal-tb;
-  font-size: 12rem;
+  font-size: var(--main-char-size, 12rem);
   line-height: 1.5;
   display: inline-flex;
   align-items: center;
@@ -41,6 +41,7 @@
 }
 
 .front-main-row {
+  --main-char-size: 12rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -52,9 +53,20 @@
   flex-direction: column;
   align-items: flex-end;
   gap: 10px;
+  font-size: calc(var(--main-char-size, 12rem) * 0.12);
 }
 
 .tts-buttons-right > div {
+  line-height: 1;
+}
+
+.tts-buttons-right .replay-button,
+.tts-buttons-right .replaybutton,
+.tts-buttons-right a,
+.tts-buttons-right button {
+  font-size: 1em;
+  width: 1em;
+  height: 1em;
   line-height: 1;
 }
 
@@ -201,7 +213,11 @@
   }
   
   .mainCharacter {
-    font-size: 14rem;
+    font-size: var(--main-char-size, 14rem);
+  }
+
+  .front-main-row {
+    --main-char-size: 14rem;
   }
   
   .section-header {
