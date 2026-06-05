@@ -31,7 +31,7 @@
 /* Main character styling */
 .mainCharacter {
   writing-mode: horizontal-tb;
-  font-size: 14rem;
+  font-size: 12rem;
   line-height: 1.5;
   display: inline-flex;
   align-items: center;
