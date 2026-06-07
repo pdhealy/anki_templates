@@ -160,6 +160,12 @@
       return match ? match[1] : raw;
     }
 
+    function escapePercentInDisplayMath(raw) {
+      return raw.replace(/\$\$([\s\S]*?)\$\$/g, function (_, expr) {
+        return "$$" + expr.replace(/(^|[^\\])%/g, "$1\\%") + "$$";
+      });
+    }
+
     function renderMarkdownField(ID) {
       var el = document.getElementById(ID);
       if (!el) return;
@@ -176,6 +182,7 @@
         .replace(/\u00a0/g, " ");
       raw = unwrapOuterMarkdownFence(raw);
       raw = normalizeListIndent(raw);
+      raw = escapePercentInDisplayMath(raw);
       var md = new markdownit({
         typographer: true,
         html: true,
