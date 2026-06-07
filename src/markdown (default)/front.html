@@ -152,6 +152,14 @@
       return out.join("\n");
     }
 
+    function unwrapOuterMarkdownFence(raw) {
+      var trimmed = raw.trim();
+      var match = trimmed.match(
+        /^(?:```|~~~)\s*(?:markdown|md)?\s*\n([\s\S]*?)\n(?:```|~~~)\s*$/i,
+      );
+      return match ? match[1] : raw;
+    }
+
     function renderMarkdownField(ID) {
       var el = document.getElementById(ID);
       if (!el) return;
@@ -166,6 +174,7 @@
         .replace(/\u2002/g, "  ")
         .replace(/\t/g, "    ")
         .replace(/\u00a0/g, " ");
+      raw = unwrapOuterMarkdownFence(raw);
       raw = normalizeListIndent(raw);
       var md = new markdownit({
         typographer: true,
