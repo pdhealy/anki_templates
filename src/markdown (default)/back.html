@@ -6,11 +6,36 @@
 
 <script>
 (function () {
+  function findAsset(tag, attr, primaryURL, fallbackURL) {
+    return document.querySelector(
+      tag +
+        "[" +
+        attr +
+        '="' +
+        primaryURL +
+        '"], ' +
+        tag +
+        "[" +
+        attr +
+        '="' +
+        fallbackURL +
+        '"]'
+    );
+  }
+
   function getScript(path, altURL) {
     return new Promise(function (resolve, reject) {
+      if (findAsset("script", "src", path, altURL)) {
+        resolve();
+        return;
+      }
       var script = document.createElement("script");
       script.onload = resolve;
       script.onerror = function () {
+        if (findAsset("script", "src", altURL, path)) {
+          resolve();
+          return;
+        }
         var s = document.createElement("script");
         s.onload = resolve;
         s.onerror = reject;
@@ -24,11 +49,19 @@
 
   function getCSS(path, altURL) {
     return new Promise(function (resolve, reject) {
+      if (findAsset("link", "href", path, altURL)) {
+        resolve();
+        return;
+      }
       var css = document.createElement("link");
       css.setAttribute("rel", "stylesheet");
       css.type = "text/css";
       css.onload = resolve;
       css.onerror = function () {
+        if (findAsset("link", "href", altURL, path)) {
+          resolve();
+          return;
+        }
         var c = document.createElement("link");
         c.setAttribute("rel", "stylesheet");
         c.type = "text/css";
